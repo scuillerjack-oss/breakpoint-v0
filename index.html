@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#0a0a16" />
+<title>BREAKPOINT</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="./icons/icon-180.svg" />
+<link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+<div id="app" class="app">
+  <header class="topbar">
+    <div class="stat"><span class="stat-label">Score</span><span id="score-value">0</span></div>
+    <div class="stat"><span class="stat-label">Niveau</span><span id="level-value">1</span></div>
+    <div class="stat"><span class="stat-label">Vies</span><span id="lives-value">3</span></div>
+    <button id="pause-btn" class="icon-btn" aria-label="Pause">❚❚</button>
+  </header>
+
+  <main class="stage-wrap" id="stage-wrap">
+    <canvas id="game-canvas"></canvas>
+    <div id="tutorial-toast" class="tutorial-toast" hidden></div>
+    <div id="countdown" class="countdown" hidden></div>
+  </main>
+
+  <div id="overlay-root" class="overlay-root"></div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

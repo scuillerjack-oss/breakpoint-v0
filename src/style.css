@@ -1,0 +1,181 @@
+:root {
+  color-scheme: dark;
+  --bg: #0a0a16;
+  --panel: #14142a;
+  --text: #eef0ff;
+  --text-dim: #9aa0c8;
+  --accent: #7ad1ff;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+.app {
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  padding-top: max(8px, var(--safe-top));
+  background: var(--panel);
+  z-index: 5;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  min-width: 44px;
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.icon-btn {
+  border: none;
+  background: #1f2044;
+  color: var(--text);
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tutorial-toast {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(16px + var(--safe-bottom));
+  background: rgba(20, 20, 42, 0.92);
+  border: 1px solid rgba(122, 209, 255, 0.4);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  text-align: center;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.tutorial-toast[hidden] { display: none; }
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 0 18px rgba(122, 209, 255, 0.6);
+  pointer-events: none;
+}
+.countdown[hidden] { display: none; }
+
+.overlay-root {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+.overlay-root:empty { display: none; pointer-events: none; }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 16, 0.86);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.overlay h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.overlay p {
+  color: var(--text-dim);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.overlay-btn {
+  border: none;
+  background: var(--accent);
+  color: #06111a;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.overlay-btn.secondary {
+  background: #1f2044;
+  color: var(--text);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 260px;
+  font-size: 0.9rem;
+}
+
+.settings-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}

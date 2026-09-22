@@ -1,0 +1,20 @@
+{
+  "name": "breakpoint-v0",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "BREAKPOINT — casse-briques rétro moderne (Web/PWA, futur Android). Projet 7, V0.",
+  "scripts": {
+    "dev": "vite",
+    "dev:lan": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "test": "node --test",
+    "test:mobile": "node scripts/check-mobile.mjs",
+    "test:perf": "node scripts/check-performance.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "vite": "^5.4.10"
+  }
+}
