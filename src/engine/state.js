@@ -43,7 +43,7 @@ export function createLevelState(levelIndex, carry = {}) {
     levelId: level.id,
     levelName: level.name,
     status: "ready", // ready -> playing -> (paused) -> won | lost
-    paddle: { x: paddleX, w: PADDLE_W, h: PADDLE_H, y: PADDLE_Y, targetX: ARENA_W / 2, xlUntil: 0 },
+    paddle: { x: paddleX, w: PADDLE_W, h: PADDLE_H, y: PADDLE_Y, targetX: ARENA_W / 2, xlUntil: 0, vx: 0 },
     balls: [freshBall(paddleX + PADDLE_W / 2)],
     bricks: buildBricksForLevel(level),
     powerUps: [],

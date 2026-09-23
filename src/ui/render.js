@@ -8,12 +8,97 @@ const BRICK_COLORS = {
   3: { fill: "#ef4f7a", edge: "#a4224a" },
 };
 
-const POWERUP_LABELS = {
-  multiball: { label: "M", color: "#7ad1ff" },
-  paddle_xl: { label: "X", color: "#8affa0" },
-  laser: { label: "L", color: "#ff8a65" },
-  perforate: { label: "P", color: "#e0a8ff" },
+// V1 : remplace les cases à lettres par des pictogrammes reconnaissables
+// sans lecture obligatoire (cahier des charges V1, section 6) -- la lettre
+// reste présente mais seulement en petit repère secondaire (accessibilité),
+// jamais tout le visuel. Même palette et mêmes couleurs par bonus qu'en V0
+// (dark/néon), aucune dépendance graphique externe : tout est dessiné au
+// tracé Canvas 2D, à la même échelle que la case (POWERUP_W/H inchangés).
+const POWERUP_COLORS = {
+  multiball: "#7ad1ff",
+  paddle_xl: "#8affa0",
+  laser: "#ff8a65",
+  perforate: "#e0a8ff",
 };
+const POWERUP_LETTERS = { multiball: "M", paddle_xl: "X", laser: "L", perforate: "P" };
+
+function drawPowerUpIcon(ctx, kind, cx, cy) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.fillStyle = "#0a0a16";
+  ctx.strokeStyle = "#0a0a16";
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  if (kind === "multiball") {
+    // Trois petites balles : lisible instantanément comme "plusieurs balles".
+    const r = 2.1;
+    for (const dx of [-7, 0, 7]) {
+      ctx.beginPath();
+      ctx.arc(dx, 0, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (kind === "paddle_xl") {
+    // Barre centrale + chevrons vers l'extérieur : évoque l'élargissement.
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(-4.5, 0);
+    ctx.lineTo(4.5, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-6, -3.2);
+    ctx.lineTo(-10, 0);
+    ctx.lineTo(-6, 3.2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(6, -3.2);
+    ctx.lineTo(10, 0);
+    ctx.lineTo(6, 3.2);
+    ctx.closePath();
+    ctx.fill();
+  } else if (kind === "laser") {
+    // Petite fusée pointant vers le haut (tire vers le haut, comme le laser).
+    ctx.beginPath();
+    ctx.moveTo(0, -6);
+    ctx.lineTo(3, 1.5);
+    ctx.lineTo(1.4, 1.5);
+    ctx.lineTo(1.4, 4.2);
+    ctx.lineTo(-1.4, 4.2);
+    ctx.lineTo(-1.4, 1.5);
+    ctx.lineTo(-3, 1.5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-3, 1.5);
+    ctx.lineTo(-5.6, 4.2);
+    ctx.lineTo(-1.4, 4.2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(3, 1.5);
+    ctx.lineTo(5.6, 4.2);
+    ctx.lineTo(1.4, 4.2);
+    ctx.closePath();
+    ctx.fill();
+  } else if (kind === "perforate") {
+    // Anneau traversé par une flèche : évoque la perforation à travers un obstacle.
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.arc(0, 0, 3.6, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(-8, 0);
+    ctx.lineTo(6.5, 0);
+    ctx.moveTo(6.5, 0);
+    ctx.lineTo(3.5, -2.4);
+    ctx.moveTo(6.5, 0);
+    ctx.lineTo(3.5, 2.4);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
 
 export function drawFrame(ctx, canvasW, canvasH, state, trail) {
   const viewport = computeViewport(canvasW, canvasH);
@@ -57,16 +142,19 @@ export function drawFrame(ctx, canvasW, canvasH, state, trail) {
 
   // Power-ups qui tombent.
   for (const pu of state.powerUps) {
-    const info = POWERUP_LABELS[pu.kind] || { label: "?", color: "#fff" };
-    ctx.fillStyle = info.color;
+    const color = POWERUP_COLORS[pu.kind] || "#fff";
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.roundRect(pu.x, pu.y, pu.w, pu.h, 6);
     ctx.fill();
-    ctx.fillStyle = "#0a0a16";
-    ctx.font = "bold 12px monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(info.label, pu.x + pu.w / 2, pu.y + pu.h / 2 + 1);
+    drawPowerUpIcon(ctx, pu.kind, pu.x + pu.w / 2, pu.y + pu.h / 2);
+    // Lettre secondaire, petite et discrète (accessibilité) -- jamais tout
+    // le visuel, voir cahier des charges V1 section 6.
+    ctx.fillStyle = "rgba(10,10,20,0.55)";
+    ctx.font = "bold 6.5px monospace";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "bottom";
+    ctx.fillText(POWERUP_LETTERS[pu.kind] || "?", pu.x + pu.w - 2, pu.y + pu.h - 1);
   }
 
   // Tirs laser.

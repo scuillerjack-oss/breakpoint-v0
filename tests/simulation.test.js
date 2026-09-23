@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createLevelState, brickRect } from "../src/engine/state.js";
 import { tick } from "../src/engine/simulation.js";
-import { ARENA_W, ARENA_H, BALL_BASE_SPEED } from "../src/engine/constants.js";
+import { ARENA_W, ARENA_H, BALL_BASE_SPEED, MAX_TOTAL_BOUNCE_ANGLE_DEG, PADDLE_SPEED_LIMIT } from "../src/engine/constants.js";
 
 function noInput(overrides = {}) {
   return { pointerX: null, launchRequested: false, fire: false, ...overrides };
@@ -62,6 +62,94 @@ test("le point d'impact sur la raquette influence l'angle de renvoi", () => {
   assert.ok(right.vx > 0, "impact côté droit -> renvoi vers la droite");
   assert.ok(left.vx < 0, "impact côté gauche -> renvoi vers la gauche");
   assert.ok(right.vy < 0 && left.vy < 0 && center.vy < 0, "le renvoi reste toujours vers le haut");
+});
+
+// V1 : une raquette en mouvement au moment de l'impact dévie la balle en plus
+// de l'angle donné par le point d'impact ("effet") -- voir constants.js pour
+// la justification complète. Sans cela, un joueur qui suit simplement la
+// balle (impact quasi centré en permanence) ne fait jamais varier l'angle, et
+// puisque les murs/briques réfléchissent en miroir (angle inchangé), la balle
+// peut rester piégée dans une trajectoire répétitive qui ne balaie jamais
+// certaines briques -- cause racine du niveau 1 bloqué remonté en bêta V0.
+test("une raquette en mouvement dévie la balle même pour un impact centré (effet)", () => {
+  function bounceWithPaddleMotion(direction) {
+    const s = createLevelState(0);
+    s.status = "playing";
+    // Laisse les briques par défaut du niveau en place (loin de la raquette,
+    // sans effet sur ce test) : les vider déclencherait immédiatement la
+    // condition de victoire au premier tick et figerait la physique de la
+    // balle pour tous les ticks suivants (voir checkWinCondition()).
+    // Fait bouger la raquette sur plusieurs ticks pour lui donner une
+    // vitesse réelle (paddle.vx), sans jamais toucher la balle.
+    for (let i = 0; i < 5; i++) {
+      tick(s, 16, noInput({ pointerX: ARENA_W / 2 + direction * i * 20 }));
+    }
+    const p = s.paddle;
+    // Balle pile au centre de la raquette (offset=0) au moment de l'impact.
+    const centerX = p.x + p.w / 2;
+    s.balls = [{ x: centerX, y: p.y - 5, vx: 0, vy: 300, r: 6, launched: true, perforateUntil: 0 }];
+    // Dernier tick avec un pas de temps minuscule : la raquette continue à
+    // EXACTEMENT la même vitesse (paddle.vx recalculé = déplacement/dt,
+    // donc un dt minuscule + un déplacement proportionnellement minuscule
+    // donne la même vitesse) mais ne se déplace presque plus en position --
+    // ce qui isole l'effet de la vitesse SANS réintroduire un vrai décalage
+    // de position (qui, lui, changerait aussi l'angle par le point d'impact
+    // et fausserait ce test précis). Un dt normal ferait bouger la raquette
+    // d'assez pour sortir la balle du centre et mélanger les deux causes.
+    const velocity = 1250; // même vitesse que celle établie par le warmup ci-dessus
+    const tinyDtMs = 1;
+    const lastWarmupTarget = ARENA_W / 2 + direction * 4 * 20;
+    const tinyDelta = velocity * (tinyDtMs / 1000) * direction;
+    tick(s, tinyDtMs, noInput({ pointerX: lastWarmupTarget + tinyDelta }));
+    return s.balls[0];
+  }
+  const right = bounceWithPaddleMotion(1);
+  const left = bounceWithPaddleMotion(-1);
+  assert.ok(right.vx > 0, "raquette en mouvement vers la droite -> dévie vers la droite même à impact centré");
+  assert.ok(left.vx < 0, "raquette en mouvement vers la gauche -> dévie vers la gauche même à impact centré");
+  assert.ok(right.vy < 0 && left.vy < 0, "le renvoi reste toujours vers le haut");
+});
+
+test("la vitesse de la balle reste constante même avec un renvoi dévié par effet de raquette", () => {
+  const s = createLevelState(0);
+  s.status = "playing";
+  for (let i = 0; i < 5; i++) tick(s, 16, noInput({ pointerX: ARENA_W / 2 + i * 20 }));
+  const p = s.paddle;
+  const centerX = p.x + p.w / 2;
+  s.balls = [{ x: centerX, y: p.y - 5, vx: 0, vy: 300, r: 6, launched: true, perforateUntil: 0 }];
+  const before = Math.hypot(s.balls[0].vx, s.balls[0].vy);
+  tick(s, 16, noInput({ pointerX: ARENA_W / 2 + 5 * 20 }));
+  const after = Math.hypot(s.balls[0].vx, s.balls[0].vy);
+  assert.ok(Math.abs(after - before) < 1e-6, `vitesse dérivée par l'effet: ${before} -> ${after}`);
+});
+
+test("l'effet de raquette ne peut jamais produire un renvoi quasi-horizontal", () => {
+  const s = createLevelState(0);
+  s.status = "playing";
+  // Fait bouger la raquette vers la droite sur plusieurs ticks à la vitesse
+  // maximale plausible (voir PADDLE_SPEED_LIMIT), pour lui donner une vraie
+  // vitesse importante -- movePaddle() recalcule paddle.vx à CHAQUE tick à
+  // partir du déplacement réel, donc l'affecter directement serait écrasé.
+  const stepPerTick = (PADDLE_SPEED_LIMIT * 16) / 1000; // déplacement/tick pour atteindre ~PADDLE_SPEED_LIMIT
+  for (let i = 0; i < 4; i++) {
+    tick(s, 16, noInput({ pointerX: ARENA_W / 2 + i * stepPerTick }));
+  }
+  // Prédit la position de la raquette APRÈS le prochain tick (celui de la
+  // collision), pour placer la balle au bord extrême de cette position
+  // future -- movePaddle() bouge la raquette AVANT que stepBall() ne teste
+  // la collision, dans le même tick.
+  const p = s.paddle;
+  const nextTarget = ARENA_W / 2 + 4 * stepPerTick;
+  const nextX = Math.max(0, Math.min(ARENA_W - p.w, nextTarget - p.w / 2));
+  const hitX = nextX + p.w - 1;
+  s.balls = [{ x: hitX, y: p.y - 5, vx: 0, vy: 300, r: 6, launched: true, perforateUntil: 0 }];
+  tick(s, 16, noInput({ pointerX: nextTarget }));
+  const ball = s.balls[0];
+  const angleFromVerticalDeg = (Math.atan2(Math.abs(ball.vx), -ball.vy) * 180) / Math.PI;
+  assert.ok(
+    angleFromVerticalDeg <= MAX_TOTAL_BOUNCE_ANGLE_DEG + 0.5,
+    `angle ${angleFromVerticalDeg.toFixed(1)}° dépasse le plafond ${MAX_TOTAL_BOUNCE_ANGLE_DEG}°`
+  );
 });
 
 test("aucun tunneling à haute vitesse à travers une rangée de briques", () => {

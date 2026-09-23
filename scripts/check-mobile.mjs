@@ -165,6 +165,129 @@ async function main() {
       await page.close();
     }
 
+    // --- Test 6 (V1) : contrôle tactile relatif réel -- aucun saut au
+    // toucher initial, déplacement relatif correct, aucune téléportation
+    // après un relâchement puis un nouveau toucher ailleurs (cahier des
+    // charges V1, sections 4 et 9). Utilise la souris (mêmes événements
+    // Pointer que le tactile réel, voir input.js) car Playwright n'offre
+    // pas de "glisser" tactile haut niveau simple à driver précisément.
+    {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      const page = await context.newPage();
+      const errors = [];
+      page.on("pageerror", (e) => errors.push(String(e)));
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      await page.click("#btn-play");
+      await page.waitForTimeout(150);
+
+      const centerBefore = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+
+      // Toucher initial loin du centre : ne doit PAS téléporter la raquette.
+      await page.mouse.move(350, 700);
+      await page.mouse.down();
+      await page.waitForTimeout(30);
+      const centerAfterDown = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+
+      // Glissement de -80 vers la gauche : déplacement relatif attendu.
+      await page.mouse.move(270, 700, { steps: 8 });
+      await page.waitForTimeout(30);
+      const centerAfterDrag = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+      await page.mouse.up();
+      await page.waitForTimeout(30);
+      const centerAfterUp = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+
+      // Nouveau toucher ailleurs (loin, à gauche) : ne doit PAS téléporter.
+      await page.mouse.move(50, 700);
+      await page.mouse.down();
+      await page.waitForTimeout(30);
+      const centerAfterNewDown = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+      await page.mouse.up();
+
+      const noTeleportOnFirstTouch = Math.abs(centerAfterDown - centerBefore) < 2;
+      const movedRelatively = centerAfterDrag < centerAfterDown - 60; // -80 attendu, marge de clamp/bord
+      const keptPositionOnRelease = Math.abs(centerAfterUp - centerAfterDrag) < 2;
+      const noTeleportOnNewTouch = Math.abs(centerAfterNewDown - centerAfterUp) < 2;
+
+      if (errors.length > 0 || !noTeleportOnFirstTouch || !movedRelatively || !keptPositionOnRelease || !noTeleportOnNewTouch) {
+        failures += 1;
+        log("ÉCHEC contrôle tactile relatif", {
+          centerBefore, centerAfterDown, centerAfterDrag, centerAfterUp, centerAfterNewDown,
+          noTeleportOnFirstTouch, movedRelatively, keptPositionOnRelease, noTeleportOnNewTouch, errors,
+        });
+      } else {
+        log("OK : contrôle tactile relatif (aucun saut, déplacement relatif, pas de téléportation au nouveau toucher)");
+      }
+      await page.close();
+    }
+
+    // --- Test 7 (V1) : la raquette reste visible sous le pouce, jamais
+    // recouverte par le tutoriel/les messages inférieurs (section 5). ---
+    {
+      const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true })).newPage();
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      await page.click("#btn-play");
+      await page.waitForTimeout(150); // le tutoriel "first_move" s'affiche au premier niveau
+      const toastVisible = await page.evaluate(() => !document.getElementById("tutorial-toast").hidden);
+      const toastRect = await page.evaluate(() => document.getElementById("tutorial-toast").getBoundingClientRect());
+      const paddleRect = await page.evaluate(() => window.__breakpointDebugPaddleScreenRect());
+      const overlaps = toastVisible && paddleRect && paddleRect.bottom > toastRect.top;
+      if (!toastVisible || !paddleRect || overlaps) {
+        failures += 1;
+        log("ÉCHEC raquette potentiellement recouverte par le tutoriel", { toastVisible, toastRect, paddleRect });
+      } else {
+        log("OK : raquette entièrement visible au-dessus du tutoriel/de la zone inférieure", {
+          paddleBottom: paddleRect.bottom, toastTop: toastRect.top,
+        });
+      }
+      await page.close();
+    }
+
+    // --- Test 8 (V1) : PWA -- manifest valide, service worker enregistré,
+    // icônes déclarées réellement accessibles (section 8). ---
+    {
+      const page = await browser.newPage();
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      const manifestHref = await page.evaluate(() => document.querySelector('link[rel="manifest"]')?.href);
+      let manifestOk = false;
+      let iconsOk = false;
+      if (manifestHref) {
+        const res = await page.evaluate(async (href) => {
+          const r = await fetch(href);
+          if (!r.ok) return null;
+          return r.json();
+        }, manifestHref);
+        manifestOk = !!(res && res.icons && res.icons.length > 0 && res.name);
+        if (res && res.icons) {
+          const iconChecks = await page.evaluate(async (icons) => {
+            const results = [];
+            for (const icon of icons) {
+              try {
+                const r = await fetch(icon.src);
+                results.push(r.ok);
+              } catch {
+                results.push(false);
+              }
+            }
+            return results;
+          }, res.icons);
+          iconsOk = iconChecks.length > 0 && iconChecks.every(Boolean);
+        }
+      }
+      await page.waitForTimeout(300); // laisse le temps à navigator.serviceWorker.register() de s'exécuter
+      const swRegistered = await page.evaluate(async () => {
+        if (!("serviceWorker" in navigator)) return false;
+        const regs = await navigator.serviceWorker.getRegistrations();
+        return regs.length > 0;
+      });
+      if (!manifestOk || !iconsOk || !swRegistered) {
+        failures += 1;
+        log("ÉCHEC PWA", { manifestHref, manifestOk, iconsOk, swRegistered });
+      } else {
+        log("OK : PWA (manifest valide, icônes accessibles, service worker enregistré)");
+      }
+      await page.close();
+    }
+
     await browser.close();
   } finally {
     server.kill();

@@ -10,8 +10,11 @@ import {
   ARENA_H,
   PADDLE_W,
   PADDLE_XL_W,
+  PADDLE_SPEED_LIMIT,
   BALL_BASE_SPEED,
   MAX_PADDLE_BOUNCE_ANGLE_DEG,
+  MAX_PADDLE_ENGLISH_ANGLE_DEG,
+  MAX_TOTAL_BOUNCE_ANGLE_DEG,
   MAX_SUBSTEPS_PER_TICK,
   POWERUP_W,
   POWERUP_H,
@@ -109,8 +112,9 @@ function applyPowerUp(state, kind) {
   }
 }
 
-function movePaddle(state, input) {
+function movePaddle(state, input, dtMs) {
   const p = state.paddle;
+  const prevX = p.x;
   p.w = state.elapsedMs < p.xlUntil ? PADDLE_XL_W : PADDLE_W;
   if (input.pointerX != null) {
     p.targetX = input.pointerX;
@@ -118,6 +122,7 @@ function movePaddle(state, input) {
   let x = p.targetX - p.w / 2;
   x = Math.max(0, Math.min(ARENA_W - p.w, x));
   p.x = x;
+  p.vx = dtMs > 0 ? (x - prevX) / (dtMs / 1000) : 0;
 }
 
 function launchBalls(state) {
@@ -189,7 +194,15 @@ function stepBall(state, ball, dt) {
       let offset = (x - centerX) / (p.w / 2);
       offset = Math.max(-1, Math.min(1, offset));
       const maxAngle = (MAX_PADDLE_BOUNCE_ANGLE_DEG * Math.PI) / 180;
-      const angle = offset * maxAngle;
+      let angle = offset * maxAngle;
+      // Effet ("English") : une raquette en mouvement au moment de l'impact
+      // dévie la balle en plus de l'angle donné par le point d'impact (voir
+      // constants.js pour la justification complète). p.vx est déjà à jour
+      // pour ce tick (movePaddle() s'exécute avant la détection de collision).
+      const englishFactor = Math.max(-1, Math.min(1, p.vx / PADDLE_SPEED_LIMIT));
+      const maxEnglishAngle = (MAX_PADDLE_ENGLISH_ANGLE_DEG * Math.PI) / 180;
+      const maxTotalAngle = (MAX_TOTAL_BOUNCE_ANGLE_DEG * Math.PI) / 180;
+      angle = Math.max(-maxTotalAngle, Math.min(maxTotalAngle, angle + englishFactor * maxEnglishAngle));
       const speed = Math.hypot(vx, vy);
       vx = speed * Math.sin(angle);
       vy = -speed * Math.cos(angle);
@@ -313,7 +326,7 @@ function checkWinCondition(state) {
  */
 export function tick(state, dtMs, input) {
   state.events = [];
-  movePaddle(state, input);
+  movePaddle(state, input, dtMs);
 
   if (state.status === "ready") {
     if (input.launchRequested) {

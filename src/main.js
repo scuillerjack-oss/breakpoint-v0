@@ -4,10 +4,11 @@ import { LEVELS } from "./engine/levels.js";
 import { loadSave, writeSave, markLevelUnlocked, markTutorialSeen } from "./engine/save.js";
 import { createInputController } from "./ui/input.js";
 import { drawFrame } from "./ui/render.js";
+import { setSafeAreaReserve } from "./ui/viewport.js";
 import { createParticleSystem } from "./ui/particles.js";
 import { createTutorialController } from "./ui/tutorial.js";
 import { sfx, setAudioEnabled, vibrate } from "./ui/audio.js";
-import { ARENA_H } from "./engine/constants.js";
+import { ARENA_H, POWERUP_W, POWERUP_H, POWERUP_KINDS } from "./engine/constants.js";
 
 const FIXED_DT = 1000 / 60;
 const MAX_FRAME_MS = 250; // clamp après un long gel (onglet en arrière-plan) : jamais rattraper des secondes d'un coup
@@ -39,11 +40,24 @@ let hasMovedOnce = false;
 let countdownValue = 0;
 let countdownTimer = null;
 
+// Sonde invisible pour lire le safe-area réel de l'appareil (encoche/barre
+// de geste) en pixels CSS -- voir viewport.js. env(safe-area-inset-bottom)
+// vaut 0px sur un appareil sans encoche, donc cette réserve ne retire
+// jamais d'espace de jeu "inutilement" (cahier des charges V1, section 5)
+// sur la majorité des téléphones ; elle ne s'active que là où c'est requis.
+const safeAreaProbe = document.createElement("div");
+safeAreaProbe.style.cssText =
+  "position:fixed; left:0; bottom:0; width:0; height:0; padding-bottom:var(--safe-bottom); pointer-events:none; visibility:hidden;";
+document.body.appendChild(safeAreaProbe);
+const ERGONOMIC_THUMB_CLEARANCE_CSS_PX = 28; // marge fixe même sans safe-area (retour bêta : le pouce masquait la raquette)
+
 function resizeCanvas() {
   const rect = canvas.parentElement.getBoundingClientRect();
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(rect.width * dpr);
   canvas.height = Math.round(rect.height * dpr);
+  const safeBottomCss = parseFloat(getComputedStyle(safeAreaProbe).paddingBottom) || 0;
+  setSafeAreaReserve((safeBottomCss + ERGONOMIC_THUMB_CLEARANCE_CSS_PX) * dpr);
   input.updateViewport();
 }
 window.addEventListener("resize", resizeCanvas);
@@ -105,6 +119,7 @@ function showSettings() {
 function startLevel(index) {
   levelIndex = Math.max(0, Math.min(LEVELS.length - 1, index));
   state = createLevelState(levelIndex, { lives: runLives, score: runScore });
+  input.resetTarget(state.paddle.x + state.paddle.w / 2);
   ballTrail = [];
   updateHud();
   clearOverlay();
@@ -292,6 +307,10 @@ function frame(now) {
       }
     }
     updateHud();
+    // Position réelle (post-simulation) du centre de la raquette, fournie
+    // au contrôleur tactile pour qu'un PROCHAIN toucher fixe sa référence
+    // sur l'état actuel de la raquette, jamais sur une valeur périmée.
+    input.setPaddleCenterX(state.paddle.x + state.paddle.w / 2);
 
     ballTrail.push(...state.balls.map((b) => ({ x: b.x, y: b.y, r: b.r })));
     if (ballTrail.length > state.balls.length * 5) {
@@ -333,6 +352,38 @@ window.__breakpointDebugAddBalls = (count) => {
       perforateUntil: 0,
     });
   }
+};
+
+// Hook de test UNIQUEMENT, lecture seule (utilisé par scripts/check-mobile.mjs
+// pour vérifier le contrôle tactile relatif -- aucun saut, déplacement
+// relatif correct). Ne modifie jamais l'état, jamais appelé par l'UI du jeu.
+window.__breakpointDebugPaddleCenterX = () => (state ? state.paddle.x + state.paddle.w / 2 : null);
+
+// Idem, lecture seule : rectangle ÉCRAN (page, pixels CSS) réel de la
+// raquette, pour vérifier qu'aucun élément d'UI (tutoriel, etc.) ne la
+// recouvre (cahier des charges V1, section 5).
+window.__breakpointDebugPaddleScreenRect = () => {
+  if (!state) return null;
+  const viewport = input.getViewport();
+  const canvasRect = canvas.getBoundingClientRect();
+  const cssScale = canvasRect.width / canvas.width;
+  const p = state.paddle;
+  const toCss = (bx, by) => ({
+    x: canvasRect.left + (viewport.offsetX + bx * viewport.scale) * cssScale,
+    y: canvasRect.top + (viewport.offsetY + by * viewport.scale) * cssScale,
+  });
+  const topLeft = toCss(p.x, p.y);
+  const bottomRight = toCss(p.x + p.w, p.y + p.h);
+  return { left: topLeft.x, top: topLeft.y, right: bottomRight.x, bottom: bottomRight.y };
+};
+
+// Hook de test/QA visuelle UNIQUEMENT (les 4 pictogrammes de bonus, voir
+// refonte V1 dans render.js) -- jamais appelé par l'UI du jeu.
+window.__breakpointDebugSpawnPowerUps = () => {
+  if (!state) return;
+  POWERUP_KINDS.forEach((kind, i) => {
+    state.powerUps.push({ kind, x: 40 + i * 90, y: 300, w: POWERUP_W, h: POWERUP_H, alive: true });
+  });
 };
 
 if ("serviceWorker" in navigator) {
