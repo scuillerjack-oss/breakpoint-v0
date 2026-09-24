@@ -49,7 +49,16 @@ const safeAreaProbe = document.createElement("div");
 safeAreaProbe.style.cssText =
   "position:fixed; left:0; bottom:0; width:0; height:0; padding-bottom:var(--safe-bottom); pointer-events:none; visibility:hidden;";
 document.body.appendChild(safeAreaProbe);
-const ERGONOMIC_THUMB_CLEARANCE_CSS_PX = 28; // marge fixe même sans safe-area (retour bêta : le pouce masquait la raquette)
+// V2 : 28px (V1) s'est révélé insuffisant sur appareil physique réel (bêta
+// du 24 septembre 2026) -- une prise en main naturelle pose le pouce à plat,
+// pas du bout, et son empreinte de contact réelle couvre une zone bien plus
+// large qu'un simple point. Valeur fixe (PAS un pourcentage de l'écran : la
+// taille d'un pouce humain ne grandit pas avec celle du téléphone) choisie
+// pour approximer une zone de contact pouce confortable en usage courant,
+// nettement plus généreuse que V1 -- combinée à la remontée de PADDLE_Y
+// elle-même (voir constants.js) pour une séparation en deux couches :
+// réserve d'écran (ici) + marge structurelle dans l'arène (PADDLE_Y).
+const ERGONOMIC_THUMB_CLEARANCE_CSS_PX = 120;
 
 function resizeCanvas() {
   const rect = canvas.parentElement.getBoundingClientRect();

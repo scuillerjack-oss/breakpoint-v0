@@ -220,26 +220,155 @@ async function main() {
       await page.close();
     }
 
-    // --- Test 7 (V1) : la raquette reste visible sous le pouce, jamais
-    // recouverte par le tutoriel/les messages inférieurs (section 5). ---
+    // --- Test 6b (V2) : scénario humain EXACT reproduit avec de vrais
+    // PointerEvent de type "touch" (pas la souris) dispatchés directement
+    // dans la page -- c'est le scénario précis fourni par le testeur : "raquette
+    // au centre -> lever complètement le doigt -> poser près du bord droit
+    // SANS le déplacer -> la raquette doit rester exactement au centre ->
+    // glisser ensuite vers la gauche -> elle part vers la gauche depuis le
+    // centre." Vérifie aussi l'isolation par pointerId (un second contact
+    // fantôme/paume pendant qu'un glissement réel est en cours ne doit
+    // jamais l'interrompre ni le corrompre -- diagnostiqué en V2 comme cause
+    // plausible de la téléportation constatée sur appareil physique, jamais
+    // exercée par un test basé sur la souris qui n'a qu'un seul pointeur
+    // implicite). Limite honnête : ceci dispatche des PointerEvent
+    // synthétiques avec pointerType "touch" pour exercer fidèlement NOTRE
+    // code (les mêmes gestionnaires qu'un vrai tactile), mais ne passe pas
+    // par le pipeline natif de synthèse tactile du système d'exploitation
+    // réel -- voir le rapport technique V2. ---
     {
-      const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true })).newPage();
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      const page = await context.newPage();
+      const errors = [];
+      page.on("pageerror", (e) => errors.push(String(e)));
       await page.goto(BASE_URL, { waitUntil: "networkidle" });
       await page.click("#btn-play");
-      await page.waitForTimeout(150); // le tutoriel "first_move" s'affiche au premier niveau
-      const toastVisible = await page.evaluate(() => !document.getElementById("tutorial-toast").hidden);
-      const toastRect = await page.evaluate(() => document.getElementById("tutorial-toast").getBoundingClientRect());
-      const paddleRect = await page.evaluate(() => window.__breakpointDebugPaddleScreenRect());
-      const overlaps = toastVisible && paddleRect && paddleRect.bottom > toastRect.top;
-      if (!toastVisible || !paddleRect || overlaps) {
+      await page.waitForTimeout(150);
+
+      async function dispatchTouch(type, x, y, pointerId) {
+        await page.evaluate(
+          ({ type, x, y, pointerId }) => {
+            const el = document.getElementById("game-canvas");
+            const ev = new PointerEvent(type, {
+              clientX: x,
+              clientY: y,
+              pointerId,
+              pointerType: "touch",
+              isPrimary: pointerId === 1,
+              bubbles: true,
+              cancelable: true,
+              buttons: type === "pointerup" || type === "pointercancel" ? 0 : 1,
+            });
+            el.dispatchEvent(ev);
+          },
+          { type, x, y, pointerId }
+        );
+      }
+
+      const centerOriginal = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+
+      // Scénario humain exact : toucher initial près du bord droit, SANS
+      // mouvement -> la raquette ne doit PAS bouger.
+      await dispatchTouch("pointerdown", 350, 700, 1);
+      await page.waitForTimeout(20);
+      const centerAfterInitialTouch = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+
+      // Contact fantôme (deuxième pointerId) pendant que le premier est actif
+      // : doit être totalement ignoré, jamais interrompre ni corrompre le
+      // suivi du premier doigt.
+      await dispatchTouch("pointerdown", 30, 200, 2);
+      await dispatchTouch("pointermove", 10, 780, 2);
+      await page.waitForTimeout(20);
+      const centerAfterGhost = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+      await dispatchTouch("pointerup", 10, 780, 2);
+
+      // Glissement du doigt PRINCIPAL vers la gauche de 100px.
+      await dispatchTouch("pointermove", 250, 700, 1);
+      await page.waitForTimeout(20);
+      const centerAfterDrag = await page.evaluate(() => window.__breakpointDebugPaddleCenterX());
+      await dispatchTouch("pointerup", 250, 700, 1);
+
+      const noMoveOnInitialTouch = Math.abs(centerAfterInitialTouch - centerOriginal) < 2;
+      const ghostIgnored = Math.abs(centerAfterGhost - centerAfterInitialTouch) < 2;
+      const draggedLeftFromCenter = centerAfterDrag < centerOriginal - 60; // -100 attendu, marge de clamp
+
+      if (errors.length > 0 || !noMoveOnInitialTouch || !ghostIgnored || !draggedLeftFromCenter) {
         failures += 1;
-        log("ÉCHEC raquette potentiellement recouverte par le tutoriel", { toastVisible, toastRect, paddleRect });
-      } else {
-        log("OK : raquette entièrement visible au-dessus du tutoriel/de la zone inférieure", {
-          paddleBottom: paddleRect.bottom, toastTop: toastRect.top,
+        log("ÉCHEC scénario humain exact (vrais PointerEvent tactiles)", {
+          centerOriginal, centerAfterInitialTouch, centerAfterGhost, centerAfterDrag,
+          noMoveOnInitialTouch, ghostIgnored, draggedLeftFromCenter, errors,
         });
+      } else {
+        log("OK : scénario humain exact reproduit avec de vrais PointerEvent tactiles (aucun saut, contact fantôme ignoré, glissement relatif correct)");
       }
       await page.close();
+    }
+
+    // --- Test 7 (V2) : vraie marge verticale entre la raquette et la zone
+    // naturelle du pouce -- une simple absence de recouvrement avec le
+    // tutoriel n'est plus un critère suffisant (cahier des charges V2,
+    // section 7). Vérifié sur plusieurs tailles d'écran (pas un seul
+    // téléphone) avec un seuil minimal explicite. ---
+    {
+      const MIN_THUMB_ZONE_GAP_CSS_PX = 90; // seuil de validation -- distinct de la constante d'implémentation (120px), volontairement un peu plus strict pour laisser une marge de tolérance
+      const viewports = [
+        { width: 320, height: 568, label: "petit téléphone" },
+        { width: 390, height: 844, label: "téléphone courant" },
+        { width: 428, height: 926, label: "grand téléphone" },
+      ];
+      let allOk = true;
+      for (const vp of viewports) {
+        const page = await (await browser.newContext({ viewport: vp, hasTouch: true })).newPage();
+        await page.goto(BASE_URL, { waitUntil: "networkidle" });
+        await page.click("#btn-play");
+        await page.waitForTimeout(150);
+        const toastRect = await page.evaluate(() => document.getElementById("tutorial-toast").getBoundingClientRect());
+        const paddleRect = await page.evaluate(() => window.__breakpointDebugPaddleScreenRect());
+        const canvasRect = await page.evaluate(() => document.getElementById("game-canvas").getBoundingClientRect());
+        const gapToToast = toastRect.top - paddleRect.bottom;
+        const gapToCanvasBottom = canvasRect.bottom - paddleRect.bottom;
+        const ok = paddleRect && gapToToast >= MIN_THUMB_ZONE_GAP_CSS_PX && gapToCanvasBottom >= MIN_THUMB_ZONE_GAP_CSS_PX;
+        if (!ok) {
+          allOk = false;
+          log(`ÉCHEC marge pouce/raquette insuffisante (${vp.label})`, { gapToToast, gapToCanvasBottom, min: MIN_THUMB_ZONE_GAP_CSS_PX });
+        } else {
+          log(`OK : marge pouce/raquette (${vp.label})`, { gapToToast: gapToToast.toFixed(0), gapToCanvasBottom: gapToCanvasBottom.toFixed(0) });
+        }
+        await page.close();
+      }
+
+      // Sous-test : la réserve répond bien à un vrai safe-area-inset-bottom
+      // simulé (pas seulement à une taille d'écran) -- appareil à encoche.
+      {
+        const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+        const page = await context.newPage();
+        await page.goto(BASE_URL, { waitUntil: "networkidle" });
+        await page.click("#btn-play");
+        await page.waitForTimeout(100);
+        const gapBefore = await page.evaluate(() => {
+          const p = window.__breakpointDebugPaddleScreenRect();
+          const c = document.getElementById("game-canvas").getBoundingClientRect();
+          return c.bottom - p.bottom;
+        });
+        await page.addStyleTag({ content: ":root { --safe-bottom: 40px; }" });
+        await page.evaluate(() => window.dispatchEvent(new Event("resize")));
+        await page.waitForTimeout(100);
+        const gapAfter = await page.evaluate(() => {
+          const p = window.__breakpointDebugPaddleScreenRect();
+          const c = document.getElementById("game-canvas").getBoundingClientRect();
+          return c.bottom - p.bottom;
+        });
+        const respondsToSafeArea = gapAfter > gapBefore + 20; // doit augmenter significativement (~40px attendu)
+        if (!respondsToSafeArea) {
+          allOk = false;
+          log("ÉCHEC la réserve ne répond pas à un safe-area-inset-bottom simulé", { gapBefore, gapAfter });
+        } else {
+          log("OK : la réserve augmente réellement avec un safe-area-inset-bottom simulé", { gapBefore: gapBefore.toFixed(0), gapAfter: gapAfter.toFixed(0) });
+        }
+        await page.close();
+      }
+
+      if (!allOk) failures += 1;
     }
 
     // --- Test 8 (V1) : PWA -- manifest valide, service worker enregistré,
@@ -284,6 +413,49 @@ async function main() {
         log("ÉCHEC PWA", { manifestHref, manifestOk, iconsOk, swRegistered });
       } else {
         log("OK : PWA (manifest valide, icônes accessibles, service worker enregistré)");
+      }
+      await page.close();
+    }
+
+    // --- Test 9 (V2) : le service worker ne sert JAMAIS une version périmée
+    // du document/app-shell alors qu'une version fraîche est disponible sur
+    // le réseau -- c'est le bug diagnostiqué en V2 (stratégie "cache
+    // d'abord" précédente, plausible cause majeure des écarts constatés en
+    // bêta réelle malgré un dépôt/déploiement à jour). On simule ici
+    // exactement ce scénario : un appareil qui a déjà une ancienne réponse
+    // en cache doit quand même recevoir la version actuelle au rechargement. ---
+    {
+      const page = await browser.newPage();
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      // Le tout premier chargement enregistre le SW mais n'est PAS contrôlé
+      // par lui (comportement standard du cycle de vie des service workers)
+      // -- un rechargement est nécessaire pour que ses fetch handlers
+      // s'appliquent réellement et peuplent le cache une première fois.
+      await page.evaluate(async () => {
+        await navigator.serviceWorker.ready;
+      });
+      await page.reload({ waitUntil: "networkidle" });
+      // Empoisonne délibérément le cache avec une fausse réponse "périmée"
+      // pour l'URL exacte du document, comme le ferait une ancienne visite.
+      await page.evaluate(async (docUrl) => {
+        const keys = await caches.keys();
+        const cacheName = keys[0]; // un seul cache géré par ce SW
+        if (!cacheName) throw new Error("aucun cache trouvé -- le SW n'a pas encore écrit");
+        const cache = await caches.open(cacheName);
+        await cache.put(docUrl, new Response("<html><body>VERSION-PERIMEE-V0-TEST</body></html>", {
+          status: 200,
+          headers: { "Content-Type": "text/html" },
+        }));
+      }, BASE_URL + "/");
+      await page.reload({ waitUntil: "networkidle" });
+      const html = await page.content();
+      const staleServed = html.includes("VERSION-PERIMEE-V0-TEST");
+      const gameLoaded = await page.locator("#btn-play").count();
+      if (staleServed || gameLoaded === 0) {
+        failures += 1;
+        log("ÉCHEC anti-péremption du service worker", { staleServed, gameLoaded });
+      } else {
+        log("OK : le service worker sert la version fraîche même avec une entrée de cache périmée empoisonnée délibérément");
       }
       await page.close();
     }

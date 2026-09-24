@@ -10,9 +10,27 @@ import { ARENA_W, PADDLE_W } from "../engine/constants.js";
 // pointerdown sert à la fois de "lancer la balle" (si le niveau attend un
 // lancer) et de "tirer" (si le laser est actif) — un seul geste tactile
 // couvre les deux, jamais un bouton séparé qui casserait l'immédiateté.
+//
+// V2 (cahier des charges section 5, "zone de commande tactile") : la totalité
+// du canvas sert déjà de zone de commande -- un toucher n'importe où (pas
+// seulement sur la raquette visuelle) fixe une référence valide, exactement
+// ce que demande "permettant au pouce de commander la raquette sans devoir
+// se placer sur elle". Aucun élément DOM séparé n'est nécessaire : la
+// séparation ergonomique réelle vient de la géométrie (PADDLE_Y remonté +
+// réserve de bas d'écran, voir constants.js et viewport.js), pas d'une
+// restriction de la zone tactile elle-même -- restreindre le geste à une
+// seule bande basse aurait été une régression (moins flexible qu'aujourd'hui).
 export function createInputController(canvas) {
   let pointerDown = false;
   let launchRequested = false;
+  // V2 : isolation par pointerId -- un contact accidentel (fantôme/paume,
+  // très réel sur écran tactile physique mais jamais produit par un test
+  // basé sur la souris) ne doit jamais interrompre ni corrompre le suivi du
+  // doigt réellement en train de glisser. Diagnostiqué comme cause plausible
+  // de la téléportation constatée en bêta physique V1 : sans cette isolation,
+  // pointermove/pointerup traitaient N'IMPORTE QUEL pointeur, pas seulement
+  // celui qui a initié le geste (voir rapport technique V2).
+  let activePointerId = null;
   let viewport = computeViewport(canvas.width, canvas.height);
   // Dernière position connue du centre de la raquette, fournie par main.js
   // à chaque frame (voir setPaddleCenterX) : sert UNIQUEMENT à fixer la
@@ -51,11 +69,23 @@ export function createInputController(canvas) {
   canvas.addEventListener(
     "pointerdown",
     (e) => {
+      if (activePointerId !== null && e.pointerId !== activePointerId) {
+        // Second point de contact pendant qu'un toucher est déjà actif
+        // (fantôme, paume, doigt accidentel) : ignoré entièrement -- ne
+        // jamais ré-ancrer sur une coordonnée parasite pendant qu'un vrai
+        // glissement est en cours.
+        return;
+      }
+      activePointerId = e.pointerId;
       pointerDown = true;
       launchRequested = true;
       const arenaX = arenaXFromClient(e.clientX, e.clientY);
       beginTouch(touch, arenaX, knownPaddleCenterX);
-      canvas.setPointerCapture(e.pointerId);
+      try {
+        canvas.setPointerCapture(e.pointerId);
+      } catch {
+        // Ne doit jamais empêcher preventDefault() ci-dessous (voir V2).
+      }
       e.preventDefault();
     },
     { passive: false }
@@ -63,6 +93,7 @@ export function createInputController(canvas) {
   canvas.addEventListener(
     "pointermove",
     (e) => {
+      if (e.pointerId !== activePointerId) return;
       if (e.buttons === 0 && e.pointerType === "mouse") return;
       const arenaX = arenaXFromClient(e.clientX, e.clientY);
       moveTouch(touch, arenaX, minCenterX, maxCenterX);
@@ -70,11 +101,15 @@ export function createInputController(canvas) {
     },
     { passive: false }
   );
-  window.addEventListener("pointerup", () => {
+  window.addEventListener("pointerup", (e) => {
+    if (e.pointerId !== activePointerId) return;
+    activePointerId = null;
     pointerDown = false;
     endTouch(touch);
   });
-  window.addEventListener("pointercancel", () => {
+  window.addEventListener("pointercancel", (e) => {
+    if (e.pointerId !== activePointerId) return;
+    activePointerId = null;
     pointerDown = false;
     endTouch(touch);
   });

@@ -16,14 +16,22 @@ export const BRICK_TOP_Y = 70;
 export const PADDLE_W = 72;
 export const PADDLE_XL_W = 116;
 export const PADDLE_H = 14;
-// V1 : remontée depuis ARENA_H-46 -- retour bêta réelle, le pouce masquait la
-// raquette. Ceci agrandit seulement la marge vide sous la raquette (aucune
-// brique n'occupe jamais cette zone, voir BRICK_TOP_Y et le nombre de
-// rangées par niveau) : l'espace de jeu briques/balle n'est pas réduit. Voir
-// aussi viewport.js pour la réserve additionnelle liée au safe-area réel de
-// l'appareil (encoche/barre de geste), gérée séparément et de façon
-// responsive plutôt que par une valeur figée pour un téléphone précis.
-export const PADDLE_Y = ARENA_H - 90;
+// V1 : remontée depuis ARENA_H-46 (retour bêta V0, pouce masquant la
+// raquette). V2 : la bêta physique réelle a montré que cette remontée restait
+// insuffisante avec une prise en main naturelle -- remontée à nouveau,
+// nettement, pour créer une vraie séparation structurelle entre la zone de
+// jeu (raquette incluse) et la zone naturelle du pouce, PAS un simple ajustement
+// de plus (cahier des charges V2, section 3 : "la raquette doit être
+// suffisamment plus haute pour rester visible au-dessus du pouce"). Ceci
+// agrandit seulement la marge vide sous la raquette (aucune brique n'occupe
+// jamais cette zone, la rangée la plus basse de tous les niveaux existants
+// se termine à BRICK_TOP_Y + 5*BRICK_ROW_H = 170, très loin en dessous) :
+// l'espace de jeu briques/balle n'est pas réduit, seule la marge inutilisée
+// se redistribue. Voir aussi viewport.js pour la réserve d'écran
+// additionnelle liée au safe-area réel de l'appareil (encoche/barre de
+// geste) ET à une vraie marge ergonomique pour le pouce -- gérée séparément
+// et de façon responsive, jamais une valeur figée pour un téléphone précis.
+export const PADDLE_Y = ARENA_H - 170;
 export const PADDLE_SPEED_LIMIT = 1400; // unités/s max, évite un snap infini si le doigt saute
 
 export const BALL_R = 6;

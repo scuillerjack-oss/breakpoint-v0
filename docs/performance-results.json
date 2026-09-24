@@ -1,8 +1,8 @@
 {
-  "avgFps": 59.74610770172158,
-  "minFps": 30.030030030029867,
-  "under50": 2,
-  "under30": 0,
+  "avgFps": 59.875891026816404,
+  "minFps": 29.94011976047937,
+  "under50": 1,
+  "under30": 1,
   "totalSamples": 235,
   "consoleErrors": []
 }
