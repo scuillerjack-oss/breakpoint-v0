@@ -15,7 +15,48 @@
 // - tout le reste (navigation, index.html, manifest, icônes) : réseau
 //   D'ABORD, le cache ne sert que de secours hors-ligne. Jamais de version
 //   périmée servie silencieusement pendant qu'une mise à jour existe.
-const CACHE_NAME = "breakpoint-cache-v2"; // changé à chaque version -- force le nettoyage de tout ancien cache par activate()
+const CACHE_NAME = "breakpoint-cache-v3"; // changé à chaque version -- force le nettoyage de tout ancien cache par activate()
+
+// V3 : audit complémentaire (cahier des charges V3, section 7). La stratégie
+// réseau-d'abord de V2 reste correcte et n'est PAS modifiée ici -- elle
+// empêche déjà par construction qu'une réponse périmée soit servie tant que
+// le réseau répond. Les deux angles morts restants, réellement corrigés
+// ci-dessous :
+// 1. Un onglet PWA laissé ouvert longtemps (cas réaliste : app ajoutée à
+//    l'écran d'accueil, jamais vraiment "fermée") ne revérifie jamais le SW
+//    tout seul -- le navigateur ne vérifie une mise à jour qu'au moment
+//    d'une navigation, avec en plus un débounce interne (~24h) documenté au
+//    rapport V2. Voir le listener "visibilitychange" dans main.js, qui
+//    appelle désormais registration.update() à chaque retour au premier
+//    plan -- ça ne supprime pas la limite du navigateur, mais ça maximise
+//    les occasions réelles de vérification (chaque retour d'arrière-plan,
+//    pas juste un rechargement complet).
+// 2. Même quand une mise à jour EST détectée et prend le contrôle
+//    (activate ci-dessous, skipWaiting+clients.claim), un onglet déjà
+//    ouvert continue d'exécuter en mémoire le JS de l'ANCIEN build tant
+//    qu'il n'est pas rechargé -- clients.claim() ne recharge rien tout
+//    seul. Voir le listener "controllerchange" dans main.js : il force
+//    exactement UN rechargement automatique dès qu'un nouveau SW prend le
+//    contrôle, pour que l'app affichée corresponde toujours au SW actif.
+//
+// Limite de stockage : cap du nombre d'entrées de fichiers hachés
+// immuables mis en cache (voir trimHashedAssetCache) pour ne pas accumuler
+// indéfiniment d'anciennes versions d'assets d'un build à l'autre.
+const MAX_HASHED_CACHE_ENTRIES = 30;
+
+async function trimHashedAssetCache() {
+  const cache = await caches.open(CACHE_NAME);
+  const keys = await cache.keys();
+  const hashedKeys = keys.filter((req) => isImmutableHashedAsset(new URL(req.url)));
+  const excess = hashedKeys.length - MAX_HASHED_CACHE_ENTRIES;
+  if (excess > 0) {
+    // Cache.keys() renvoie l'ordre d'insertion dans les implémentations
+    // courantes (non garanti par la spec, mais suffisant pour une simple
+    // purge de confort -- jamais utilisé pour une garantie de fraîcheur,
+    // qui repose entièrement sur la stratégie réseau-d'abord ci-dessus).
+    await Promise.all(hashedKeys.slice(0, excess).map((req) => cache.delete(req)));
+  }
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(self.skipWaiting());
@@ -49,7 +90,7 @@ self.addEventListener("fetch", (event) => {
           fetch(event.request).then((response) => {
             if (response && response.status === 200) {
               const clone = response.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone).then(trimHashedAssetCache));
             }
             return response;
           })

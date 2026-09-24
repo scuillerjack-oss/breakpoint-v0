@@ -2,8 +2,26 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { LEVELS, validateAllLevels, validateLevel, buildBricksForLevel } from "../src/engine/levels.js";
 
-test("les 5 à 10 niveaux V0 respectent le format attendu", () => {
-  assert.ok(LEVELS.length >= 5 && LEVELS.length <= 10, `${LEVELS.length} niveaux (attendu 5-10)`);
+test("V3 : exactement 50 niveaux réellement présents", () => {
+  assert.equal(LEVELS.length, 50, `${LEVELS.length} niveaux (attendu 50, cahier des charges V3)`);
+});
+
+test("V3 : aucun niveau n'est un copier-coller strict d'un autre (motifs de briques tous distincts)", () => {
+  const seen = new Map();
+  for (const level of LEVELS) {
+    const key = level.rows.join("|");
+    if (seen.has(key)) {
+      assert.fail(`niveau ${level.id} a exactement le même motif de briques que le niveau ${seen.get(key)}`);
+    }
+    seen.set(key, level.id);
+  }
+});
+
+test("V3 : aucun niveau généré ne dépasse le plafond d'impacts anti-marathon", () => {
+  for (const level of LEVELS.slice(10)) {
+    const totalHits = buildBricksForLevel(level).reduce((s, b) => s + b.hp, 0);
+    assert.ok(totalHits <= 140, `niveau ${level.id} : ${totalHits} impacts, au-delà du plafond attendu`);
+  }
 });
 
 test("aucun niveau ne déclenche d'alerte de validation", () => {

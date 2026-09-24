@@ -166,6 +166,17 @@ html, body {
   color: var(--text);
 }
 
+/* Identifiant de build (version+commit) : visible et copiable au besoin,
+   mais discret -- jamais un élément qui capte l'attention du joueur (cahier
+   des charges V3, section 8). */
+.build-id {
+  color: var(--text-dim);
+  opacity: 0.5;
+  font-size: 0.7rem;
+  margin-top: 4px;
+  user-select: text;
+}
+
 .settings-row {
   display: flex;
   align-items: center;

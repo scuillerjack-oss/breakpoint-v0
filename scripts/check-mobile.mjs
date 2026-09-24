@@ -5,8 +5,8 @@
 // reprise après rechargement (sauvegarde persistée), et un cycle tactile
 // réel (glisser la raquette, lancer la balle).
 import { chromium } from "playwright";
-import { spawn, spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { spawn, spawnSync, execSync } from "node:child_process";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -456,6 +456,188 @@ async function main() {
         log("ÉCHEC anti-péremption du service worker", { staleServed, gameLoaded });
       } else {
         log("OK : le service worker sert la version fraîche même avec une entrée de cache périmée empoisonnée délibérément");
+      }
+      await page.close();
+    }
+
+    // --- Test 10 (V3) : cycle de vie réel de la musique de fond -- démarre
+    // sur un vrai geste utilisateur, jamais plus d'une instance/AudioContext
+    // superposée, s'arrête proprement à la mise en pause (y compris via une
+    // perte de focus simulée), et reprend correctement sur un nouveau geste
+    // réel (cahier des charges V3, section 6). ---
+    {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      const page = await context.newPage();
+      const errors = [];
+      page.on("pageerror", (e) => errors.push(String(e)));
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+
+      const beforePlay = await page.evaluate(() => window.__breakpointDebugAudioState());
+
+      await page.click("#btn-play");
+      await page.waitForTimeout(200);
+      const afterPlay = await page.evaluate(() => window.__breakpointDebugAudioState());
+
+      // Perte de focus -> la musique doit s'arrêter proprement (pas de fond
+      // sonore qui continue hors champ).
+      await page.evaluate(() => {
+        Object.defineProperty(document, "hidden", { value: true, configurable: true });
+        document.dispatchEvent(new Event("visibilitychange"));
+      });
+      await page.waitForTimeout(150);
+      const afterHidden = await page.evaluate(() => window.__breakpointDebugAudioState());
+
+      // Reprise -> un vrai clic (geste réel) doit relancer la musique SANS
+      // recréer un second AudioContext.
+      await page.click("#btn-resume");
+      await page.waitForTimeout(250); // laisse passer le décompte de reprise
+      await page.waitForTimeout(200);
+      const afterResume = await page.evaluate(() => window.__breakpointDebugAudioState());
+
+      const startedOnGesture = !beforePlay.musicRunning && afterPlay.musicRunning;
+      const stoppedOnBackground = !afterHidden.musicRunning;
+      const resumedCleanly = afterResume.musicRunning;
+      const singleAudioContext =
+        afterPlay.audioContextCreations === 1 &&
+        afterHidden.audioContextCreations === 1 &&
+        afterResume.audioContextCreations === 1;
+
+      if (errors.length > 0 || !startedOnGesture || !stoppedOnBackground || !resumedCleanly || !singleAudioContext) {
+        failures += 1;
+        log("ÉCHEC cycle de vie musique", {
+          beforePlay, afterPlay, afterHidden, afterResume,
+          startedOnGesture, stoppedOnBackground, resumedCleanly, singleAudioContext, errors,
+        });
+      } else {
+        log("OK : musique démarrée sur geste réel, arrêtée en arrière-plan, reprise proprement, un seul AudioContext");
+      }
+      await page.close();
+    }
+
+    // --- Test 11 (V3) : réglage musique persistant et respecté -- désactiver
+    // la musique dans les réglages doit l'arrêter immédiatement et empêcher
+    // tout redémarrage tant qu'elle reste désactivée. ---
+    {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      const page = await context.newPage();
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      await page.click("#btn-settings");
+      await page.click("#opt-music"); // désactive (coché par défaut)
+      await page.click("#btn-back");
+      await page.click("#btn-play");
+      await page.waitForTimeout(200);
+      const state1 = await page.evaluate(() => window.__breakpointDebugAudioState());
+      const musicSettingPersisted = await page.evaluate(() =>
+        JSON.parse(localStorage.getItem("breakpoint-v0-save")).settings.music === false
+      );
+      if (state1.musicRunning || !musicSettingPersisted) {
+        failures += 1;
+        log("ÉCHEC réglage musique désactivée non respecté", { state1, musicSettingPersisted });
+      } else {
+        log("OK : musique désactivée dans les réglages -- reste bien silencieuse et persistée");
+      }
+      await page.close();
+    }
+
+    // --- Test 12 (V3) : identifiant de build réellement affiché, non vide,
+    // conforme au format "vX.Y.Z+hash", et dont le hash correspond bien au
+    // commit RÉELLEMENT construit (jamais une valeur codée en dur qu'on
+    // pourrait oublier de mettre à jour -- cahier des charges V3, section 8,
+    // motivé par l'incident de cache V2 où un déploiement à jour était
+    // indiscernable d'un ancien). ---
+    {
+      const page = await browser.newPage();
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      await page.click("#btn-settings");
+      const buildId = await page.textContent("#build-id").catch(() => "");
+      const pkgVersion = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8")).version;
+      let expectedHash;
+      try {
+        expectedHash = execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim();
+      } catch {
+        expectedHash = null;
+      }
+      const format = /^v\d+\.\d+\.\d+\+[0-9a-f]{7}$/;
+      const matchesFormat = format.test(buildId);
+      const matchesVersion = buildId.includes(`v${pkgVersion}+`);
+      const matchesCommit = !expectedHash || buildId.endsWith(`+${expectedHash}`);
+      if (!matchesFormat || !matchesVersion || !matchesCommit) {
+        failures += 1;
+        log("ÉCHEC identifiant de build", { buildId, pkgVersion, expectedHash, matchesFormat, matchesVersion, matchesCommit });
+      } else {
+        log(`OK : identifiant de build affiché et exact (${buildId})`);
+      }
+      await page.close();
+    }
+
+    // --- Test 13 (V3) : durcissement du cycle de vie du service worker --
+    // un onglet déjà ouvert qui revient au premier plan pendant qu'une
+    // NOUVELLE version a été déployée doit détecter la mise à jour et se
+    // recharger automatiquement (une seule fois), pour ne jamais continuer
+    // à exécuter en mémoire le JS d'un ancien build alors qu'un SW plus
+    // récent a pris le contrôle (cahier des charges V3, section 7). ---
+    {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      const page = await context.newPage();
+      const errors = [];
+      page.on("pageerror", (e) => errors.push(String(e)));
+      await page.goto(BASE_URL, { waitUntil: "networkidle" });
+      await page.evaluate(async () => {
+        await navigator.serviceWorker.ready;
+      });
+      // Premier chargement non contrôlé par le SW (cycle de vie standard) --
+      // un rechargement est nécessaire pour être sous son contrôle actif.
+      await page.reload({ waitUntil: "networkidle" });
+      await page.evaluate(async () => {
+        await navigator.serviceWorker.ready;
+      });
+      await page.evaluate(() => {
+        window.__preUpdateMarker = "present-before-reload";
+      });
+
+      // Simule un VRAI nouveau déploiement : le fichier sw.js servi diffère
+      // désormais octet pour octet de celui déjà installé.
+      const swPath = join(ROOT, "dist", "sw.js");
+      const originalSw = readFileSync(swPath, "utf8");
+      const updatedSw = originalSw.replace(
+        'const CACHE_NAME = "breakpoint-cache-v3";',
+        'const CACHE_NAME = "breakpoint-cache-v3-test-update";'
+      );
+      if (updatedSw === originalSw) throw new Error("le remplacement du CACHE_NAME dans sw.js n'a rien changé -- test invalide");
+      writeFileSync(swPath, updatedSw);
+
+      try {
+        // Retour au premier plan réel -> doit déclencher registration.update().
+        await page.evaluate(() => {
+          Object.defineProperty(document, "hidden", { value: true, configurable: true });
+          document.dispatchEvent(new Event("visibilitychange"));
+        });
+        await page.evaluate(() => {
+          Object.defineProperty(document, "hidden", { value: false, configurable: true });
+          document.dispatchEvent(new Event("visibilitychange"));
+        });
+
+        // Laisse le temps réel : détection -> install -> skipWaiting ->
+        // activate -> clients.claim() -> événement controllerchange -> reload.
+        await page.waitForFunction(
+          () => window.__preUpdateMarker === undefined,
+          { timeout: 15000 }
+        ).catch(() => {});
+        await page.waitForTimeout(300);
+
+        const markerGoneAfterReload = await page.evaluate(() => window.__preUpdateMarker === undefined);
+        const stillPlayable = (await page.locator("#btn-play").count()) > 0;
+
+        if (errors.length > 0 || !markerGoneAfterReload || !stillPlayable) {
+          failures += 1;
+          log("ÉCHEC rechargement automatique après mise à jour du service worker", {
+            markerGoneAfterReload, stillPlayable, errors,
+          });
+        } else {
+          log("OK : un onglet ouvert se recharge automatiquement dès qu'une nouvelle version du service worker prend le contrôle");
+        }
+      } finally {
+        writeFileSync(swPath, originalSw); // restaure l'état normal pour ne pas polluer le reste de la suite
       }
       await page.close();
     }

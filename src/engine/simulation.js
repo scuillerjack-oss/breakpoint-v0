@@ -188,7 +188,29 @@ function stepBall(state, ball, dt) {
       continue;
     }
 
-    if (best.collider.kind === "paddle") {
+    if (best.collider.kind === "paddle" && best.normal.y < 0) {
+      // V3 : cette formule d'aim (offset + effet de raquette) ne doit
+      // s'appliquer QUE pour un impact réel sur la face SUPÉRIEURE de la
+      // raquette (best.normal.y < 0, balle venant d'au-dessus) -- c'est la
+      // seule situation où "viser avec la position de la raquette" a un
+      // sens physique, et c'est la quasi-totalité du jeu normal. Avant ce
+      // correctif, CE BRANCHEMENT S'APPLIQUAIT À TOUT CONTACT AVEC LA
+      // RAQUETTE SANS REGARDER LA NORMALE RÉELLE (voir sweptAABB) : une
+      // balle touchant la face inférieure (venant d'en dessous, normal.y>0
+      // -- ex. après être passée à côté de la raquette puis avoir rebondi
+      // sur un mur) se voyait quand même forcée vers le HAUT (vy toujours
+      // négatif), alors que la correction positionnelle juste en dessous
+      // utilise la VRAIE normale et la repousse sous la raquette --
+      // contradiction directe entre position et vitesse qui piège la balle
+      // dans une boucle de collision perpétuelle contre la face inférieure
+      // (bug "balle bloquée sous la raquette" remonté en bêta V2, reproduit
+      // et confirmé de façon déterministe avant ce correctif -- voir le
+      // rapport technique V3 et tests/ball-under-paddle.test.js). Un impact
+      // par le dessous ou par le côté doit se comporter comme n'importe quel
+      // autre collideur (réflexion selon la normale réelle, branche `else`
+      // ci-dessous) : la balle rebondit alors correctement VERS LE BAS,
+      // loin de la raquette, et suit la perte normale si elle est déjà
+      // passée sous la zone de jeu -- jamais "sauvée" par accident.
       const p = state.paddle;
       const centerX = p.x + p.w / 2;
       let offset = (x - centerX) / (p.w / 2);

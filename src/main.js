@@ -7,7 +7,7 @@ import { drawFrame } from "./ui/render.js";
 import { setSafeAreaReserve } from "./ui/viewport.js";
 import { createParticleSystem } from "./ui/particles.js";
 import { createTutorialController } from "./ui/tutorial.js";
-import { sfx, setAudioEnabled, vibrate } from "./ui/audio.js";
+import { sfx, setAudioEnabled, setMusicEnabled, startMusic, stopMusic, resumeMusic, vibrate, getAudioDebugState } from "./ui/audio.js";
 import { ARENA_H, POWERUP_W, POWERUP_H, POWERUP_KINDS } from "./engine/constants.js";
 
 const FIXED_DT = 1000 / 60;
@@ -25,6 +25,7 @@ const pauseBtn = document.getElementById("pause-btn");
 
 const save = loadSave();
 setAudioEnabled(save.settings.sfx);
+setMusicEnabled(save.settings.music);
 
 const input = createInputController(canvas);
 const particles = createParticleSystem();
@@ -98,6 +99,9 @@ function showMenu() {
     </div>
   `);
   document.getElementById("btn-play").addEventListener("click", () => {
+    // Premier geste utilisateur fiable (clic réel) : point d'entrée légitime
+    // pour démarrer la musique sans violer les contraintes autoplay mobile.
+    startMusic();
     startLevel(unlocked);
   });
   document.getElementById("btn-settings").addEventListener("click", showSettings);
@@ -108,11 +112,21 @@ function showSettings() {
   renderOverlay(`
     <div class="overlay">
       <h1>Réglages</h1>
+      <div class="settings-row"><span>Musique</span><input type="checkbox" id="opt-music" ${save.settings.music ? "checked" : ""}/></div>
       <div class="settings-row"><span>Effets sonores</span><input type="checkbox" id="opt-sfx" ${save.settings.sfx ? "checked" : ""}/></div>
       <div class="settings-row"><span>Vibrations</span><input type="checkbox" id="opt-haptics" ${save.settings.haptics ? "checked" : ""}/></div>
       <button class="overlay-btn" id="btn-back">Retour</button>
+      <p class="build-id" id="build-id">${__BUILD_ID__}</p>
     </div>
   `);
+  document.getElementById("opt-music").addEventListener("change", (e) => {
+    save.settings.music = e.target.checked;
+    setMusicEnabled(save.settings.music);
+    // Ce clic EST lui-même un geste utilisateur réel : démarrage immédiat
+    // légitime si l'utilisateur vient de réactiver la musique.
+    if (save.settings.music) startMusic();
+    writeSave(save);
+  });
   document.getElementById("opt-sfx").addEventListener("change", (e) => {
     save.settings.sfx = e.target.checked;
     setAudioEnabled(save.settings.sfx);
@@ -138,6 +152,7 @@ function startLevel(index) {
 
 function showPauseMenu() {
   appPhase = "paused";
+  stopMusic(); // jamais de musique qui continue en arrière-plan/pause
   clearOverlay();
   renderOverlay(`
     <div class="overlay">
@@ -147,7 +162,10 @@ function showPauseMenu() {
       <button class="overlay-btn secondary" id="btn-menu">Retour au menu</button>
     </div>
   `);
-  document.getElementById("btn-resume").addEventListener("click", beginResumeCountdown);
+  document.getElementById("btn-resume").addEventListener("click", () => {
+    resumeMusic(); // clic réel : geste utilisateur valide pour reprendre la lecture
+    beginResumeCountdown();
+  });
   document.getElementById("btn-restart").addEventListener("click", () => confirmAbandon(() => startLevel(levelIndex)));
   document.getElementById("btn-menu").addEventListener("click", () => confirmAbandon(showMenu));
   history.pushState({ breakpointPause: true }, "");
@@ -395,10 +413,44 @@ window.__breakpointDebugSpawnPowerUps = () => {
   });
 };
 
+// Hook de test/QA UNIQUEMENT (cycle de vie de la musique -- V3), lecture
+// seule, jamais appelé par l'UI du jeu.
+window.__breakpointDebugAudioState = getAudioDebugState;
+
+// V3 : audit/durcissement complémentaire du cycle de vie du service worker
+// (cahier des charges V3, section 7 -- motivé directement par l'incident de
+// cache V2). La stratégie réseau-d'abord (voir sw.js) rendait déjà
+// structurellement impossible qu'une réponse périmée soit servie tant que
+// le réseau répond ; les deux angles morts restants concernaient un onglet
+// PWA laissé ouvert longtemps :
+// 1. Provoquer une vérification de mise à jour à chaque retour au premier
+//    plan (pas seulement au hasard d'un rechargement complet) -- n'annule
+//    pas le débounce interne du navigateur (documenté au rapport V2) mais
+//    maximise les occasions réelles de le déclencher.
+// 2. Recharger l'app automatiquement (une seule fois) dès qu'un nouveau
+//    service worker prend réellement le contrôle, pour que le code exécuté
+//    en mémoire corresponde toujours à celui du SW actif -- sans ça,
+//    clients.claim() change le SW actif sans jamais rafraîchir l'onglet
+//    déjà ouvert.
+let swRegistration = null;
+let swReloadTriggered = false;
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {
-      // PWA non critique : le jeu doit rester jouable même si l'enregistrement échoue.
-    });
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then((reg) => {
+        swRegistration = reg;
+      })
+      .catch(() => {
+        // PWA non critique : le jeu doit rester jouable même si l'enregistrement échoue.
+      });
+  });
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (swReloadTriggered) return;
+    swReloadTriggered = true;
+    window.location.reload();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && swRegistration) swRegistration.update().catch(() => {});
   });
 }
