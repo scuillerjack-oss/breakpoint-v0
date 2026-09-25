@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createLevelState, brickRect } from "../src/engine/state.js";
+import { createLevelState, brickRect, grantContinuation } from "../src/engine/state.js";
 import { tick } from "../src/engine/simulation.js";
 import { ARENA_W, ARENA_H, BALL_BASE_SPEED, MAX_TOTAL_BOUNCE_ANGLE_DEG, PADDLE_SPEED_LIMIT } from "../src/engine/constants.js";
 
@@ -251,6 +251,27 @@ test("dernière vie perdue : status 'lost'", () => {
   tick(s, 16, noInput());
   assert.equal(s.lives, 0);
   assert.equal(s.status, "lost");
+});
+
+// V6 : une seule vie gratuite par tentative par défaut (cahier des charges
+// V6) -- remplace les 3 vies par défaut de V0-V5.
+test("createLevelState : 1 vie par défaut, jamais 3", () => {
+  const s = createLevelState(0);
+  assert.equal(s.lives, 1);
+});
+
+test("grantContinuation : ajoute une vie, relance une balle neuve, conserve les briques déjà détruites", () => {
+  const s = createLevelState(0, { lives: 1 });
+  s.status = "lost";
+  s.lives = 0;
+  const destroyedBrick = s.bricks[0];
+  destroyedBrick.alive = false;
+  grantContinuation(s);
+  assert.equal(s.lives, 1, "une continuation ajoute exactement 1 vie");
+  assert.equal(s.status, "ready");
+  assert.equal(s.balls.length, 1);
+  assert.equal(s.balls[0].launched, false);
+  assert.equal(s.bricks[0].alive, false, "la progression déjà faite sur ce niveau n'est jamais perdue par une continuation");
 });
 
 test("toutes les briques détruites : status 'won'", () => {

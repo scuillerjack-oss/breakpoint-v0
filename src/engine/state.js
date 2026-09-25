@@ -49,7 +49,12 @@ export function createLevelState(levelIndex, carry = {}) {
     powerUps: [],
     lasers: [],
     effects: { laserUntil: 0, laserCooldownUntil: 0 },
-    lives: carry.lives ?? 3,
+    // V6 : une seule vie gratuite par tentative (cahier des charges V6,
+    // section "vies/rewarded") -- remplace les 3 vies conservées entre
+    // niveaux de V0-V5. Une continuation rewarded (voir grantContinuation
+    // ci-dessous) est la SEULE façon d'en obtenir une de plus au sein d'une
+    // même tentative.
+    lives: carry.lives ?? 1,
     score: carry.score ?? 0,
     elapsedMs: 0,
     events: [],
@@ -57,5 +62,21 @@ export function createLevelState(levelIndex, carry = {}) {
 }
 
 export function createInitialState() {
-  return createLevelState(0, { lives: 3, score: 0 });
+  return createLevelState(0, { lives: 1, score: 0 });
+}
+
+// V6 : accorde une continuation (rewarded, volontaire -- voir cahier des
+// charges V6 et src/engine/monetization.js pour le plafond par niveau).
+// Symétrique de handleLifeLost() (simulation.js) : même respawn de balle,
+// mais AJOUTE une vie et ne vérifie jamais un plafond ici (le plafond est
+// une décision de PRODUIT, prise par l'appelant via
+// monetization.canOfferRewardedContinue -- cette fonction se contente
+// d'exécuter la continuation déjà autorisée). Ne touche jamais aux briques
+// déjà détruites ni au score : la progression de la tentative en cours est
+// intégralement conservée, seule la balle est relancée.
+export function grantContinuation(state) {
+  state.lives += 1;
+  const p = state.paddle;
+  state.balls = [freshBall(p.x + p.w / 2)];
+  state.status = "ready";
 }

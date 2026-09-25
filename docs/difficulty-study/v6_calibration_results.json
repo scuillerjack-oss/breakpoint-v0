@@ -1,0 +1,735 @@
+{
+  "generatedAt": "2026-09-25T12:39:06.161Z",
+  "dSamples": [
+    0,
+    0.15,
+    0.3,
+    0.45,
+    0.6,
+    0.75,
+    0.9,
+    1
+  ],
+  "table": {
+    "frame": [
+      {
+        "d": 0,
+        "successA": 0.85625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.75,
+          "Debutant": 0.625
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.5875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.5687500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.5687500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.6375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.5,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.65625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.5,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.6062500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.5687500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      }
+    ],
+    "checker": [
+      {
+        "d": 0,
+        "successA": 0.70625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0.75
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.7312500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.6375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.125,
+          "Debutant": 0.625
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.6,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.5,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.59375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.46875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.125,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.5687500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.50625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.125,
+          "Debutant": 0
+        }
+      }
+    ],
+    "columns": [
+      {
+        "d": 0,
+        "successA": 0.79375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.625,
+          "Debutant": 0.5
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.7999999999999999,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.75,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.7125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.725,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.75,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.5875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.6124999999999999,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.375,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.5687500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.7312500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.375
+        }
+      }
+    ],
+    "diamond": [
+      {
+        "d": 0,
+        "successA": 0.7625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.75,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.79375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.625,
+          "Debutant": 0.5
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.25,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.7125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.50625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.125,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.5875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.25,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.59375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.6125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0.125
+        }
+      }
+    ],
+    "brickWall": [
+      {
+        "d": 0,
+        "successA": 0.7312500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.6875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.375,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.6062500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.25,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.5875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.25,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.6125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.6,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.5,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.48125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.5,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0,
+          "Debutant": 0
+        }
+      }
+    ],
+    "sparse": [
+      {
+        "d": 0,
+        "successA": 0.81875,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.75,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.69375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.5,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.6937500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.55,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.55,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.48125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.50625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.125,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.5625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.125,
+          "Debutant": 0.125
+        }
+      }
+    ],
+    "bands": [
+      {
+        "d": 0,
+        "successA": 0.75625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.625,
+          "Debutant": 0.5
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.7125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.725,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.375,
+          "Debutant": 0.625
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.675,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.63125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.375,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.63125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.6125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0.125
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.50625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.125,
+          "Debutant": 0
+        }
+      }
+    ],
+    "full": [
+      {
+        "d": 0,
+        "successA": 0.7125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.5,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.15,
+        "successA": 0.54375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.125,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.3,
+        "successA": 0.6062500000000001,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.25,
+          "Debutant": 0.375
+        }
+      },
+      {
+        "d": 0.45,
+        "successA": 0.50625,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.75,
+          "Faible": 0.125,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 0.6,
+        "successA": 0.59375,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.375,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.75,
+        "successA": 0.63125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 1,
+          "Faible": 0.375,
+          "Debutant": 0
+        }
+      },
+      {
+        "d": 0.9,
+        "successA": 0.6749999999999999,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.5,
+          "Debutant": 0.25
+        }
+      },
+      {
+        "d": 1,
+        "successA": 0.78125,
+        "perPlayer": {
+          "Expert": 1,
+          "Bon": 1,
+          "Moyen": 0.875,
+          "Faible": 0.75,
+          "Debutant": 0.375
+        }
+      }
+    ]
+  }
+}

@@ -38,99 +38,149 @@ function rowsToString(cells) {
   return cells.join("");
 }
 
-/** Rangée entièrement pleine d'une seule valeur de PV. */
-function fullRow(hp) {
-  return rowsToString(Array(BRICK_COLS).fill(String(hp)));
-}
-
-/** Cadre : bordure (première/dernière colonne de chaque rangée, première/dernière rangée) pleine, intérieur au choix. */
-function frame(rowCount, hp, innerHp = "0") {
-  const rows = [];
-  for (let r = 0; r < rowCount; r++) {
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      const border = r === 0 || r === rowCount - 1 || c === 0 || c === BRICK_COLS - 1;
-      cells.push(border ? String(hp) : String(innerHp));
+// --- V6 : générateur 11-100 piloté par une courbe de difficulté ----------
+// Remplace le générateur V3 (11-50, un seul HP fixe par style, 4 paliers de
+// 10 niveaux) par un générateur continu 11-100 : chaque style ci-dessous
+// est un simple MASQUE de silhouette (quelles cases appartiennent au
+// motif), et c'est une fonction de difficulté D(n) séparée qui décide, à
+// l'intérieur de ce masque, quelles cases restent vides (respiration
+// visuelle) et quel PV (1/2/3) prend chaque case remplie -- de façon
+// déterministe (hachage positionnel, jamais Math.random), pas un seul
+// niveau de gris par style.
+//
+// Cette séparation masque/difficulté est ce qui permet de faire varier le
+// taux de réussite mesuré (voir docs/difficulty-study/) SANS perdre la
+// diversité visuelle entre styles : un "frame" facile et un "frame"
+// difficile restent tous deux reconnaissables comme un cadre.
+function styleMask(style, rowCount, n) {
+  const colMasks = ["1100110011", "1010101010", "0110011001", "1001100110"];
+  const mask = Array.from({ length: rowCount }, () => Array(BRICK_COLS).fill(0));
+  const set = (r, c, v = 1) => {
+    if (r >= 0 && r < rowCount && c >= 0 && c < BRICK_COLS) mask[r][c] = v;
+  };
+  switch (style) {
+    case "frame":
+      for (let r = 0; r < rowCount; r++)
+        for (let c = 0; c < BRICK_COLS; c++)
+          if (r === 0 || r === rowCount - 1 || c === 0 || c === BRICK_COLS - 1) set(r, c);
+      break;
+    case "checker":
+      for (let r = 0; r < rowCount; r++) for (let c = 0; c < BRICK_COLS; c++) if ((r + c) % 2 === 0) set(r, c);
+      break;
+    case "columns": {
+      const colMask = colMasks[n % colMasks.length];
+      for (let r = 0; r < rowCount; r++)
+        for (let c = 0; c < BRICK_COLS; c++) if (colMask[c % colMask.length] === "1") set(r, c);
+      break;
     }
-    rows.push(rowsToString(cells));
-  }
-  return rows;
-}
-
-/** Damier alterné entre deux valeurs de PV (hpB peut être "0" = vide). */
-function checker(rowCount, hpA, hpB) {
-  const rows = [];
-  for (let r = 0; r < rowCount; r++) {
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      cells.push((r + c) % 2 === 0 ? String(hpA) : String(hpB));
+    case "diamond": {
+      const mid = (rowCount - 1) / 2;
+      for (let r = 0; r < rowCount; r++) {
+        const spread = Math.round((rowCount / 2 - Math.abs(r - mid)) * (BRICK_COLS / rowCount) + 1);
+        const half = Math.max(1, Math.min(BRICK_COLS / 2, spread));
+        for (let c = 0; c < BRICK_COLS; c++) if (Math.abs(c - (BRICK_COLS - 1) / 2) <= half) set(r, c);
+      }
+      break;
     }
-    rows.push(rowsToString(cells));
+    case "brickWall":
+      for (let r = 0; r < rowCount; r++) {
+        const gapCol = r % 2 === 0 ? 0 : BRICK_COLS - 1;
+        for (let c = 0; c < BRICK_COLS; c++) if (c !== gapCol) set(r, c);
+      }
+      break;
+    case "sparse":
+      for (let r = 0; r < rowCount; r++)
+        for (let c = 0; c < BRICK_COLS; c++) if ((r * 7 + c * 13 + n * 5) % 4 !== 0) set(r, c);
+      break;
+    case "bands":
+      for (let r = 0; r < rowCount; r++) if (r % 2 === 0) for (let c = 0; c < BRICK_COLS; c++) set(r, c);
+      break;
+    case "full":
+    default:
+      for (let r = 0; r < rowCount; r++)
+        for (let c = 0; c < BRICK_COLS; c++) if ("1110111011"[c % 10] === "1") set(r, c);
+      break;
   }
-  return rows;
+  return mask;
 }
 
-/** Colonnes verticales : un motif de colonnes pleines/vides répété sur toutes les rangées. */
-function columns(rowCount, colMask, hp) {
-  const rows = [];
-  for (let r = 0; r < rowCount; r++) {
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      cells.push(colMask[c % colMask.length] === "1" ? String(hp) : "0");
-    }
-    rows.push(rowsToString(cells));
+// Courbe de difficulté : repères de conception du cahier des charges V6,
+// AJUSTÉS par une mesure réelle (voir docs/difficulty-study/) qui a
+// contredit l'hypothèse initiale du cahier pour la toute fin de campagne --
+// voir le rapport V6, section audit, pour la démonstration complète :
+// avec le mélange de population retenu (~50% de profils sans délai de
+// réaction, voir POPULATION_MIX dans docs/difficulty-study/), même le
+// niveau le plus dense possible (6 rangées pleines, 100% des briques au PV
+// maximum, testé explicitement) ne fait JAMAIS descendre le taux de
+// réussite mélangé sous ~58% : les profils Expert/Bon/Moyen (aucun délai de
+// réaction modélisé) ne sont tout simplement jamais mis en échec par la
+// seule densité de briques dans ce moteur (vitesse de balle constante,
+// aucune pression temporelle). Cibler 20-25% aurait donc exigé soit de
+// changer la mécanique de jeu elle-même (hors périmètre V6), soit de
+// forcer une difficulté artificiellement punitive pour les niveaux
+// faciles/moyens sans jamais atteindre la cible pour autant -- rejeté par
+// la contrainte explicite du cahier ("Ne rends jamais les niveaux
+// artificiellement plus difficiles"). Le repère de fin de campagne est
+// donc RÉVISÉ à ~50-55% (juste au-dessus du plancher mesuré, avec une
+// marge de sécurité), documenté ici et dans le rapport officiel plutôt que
+// forcé.
+function smoothstep(t) {
+  const c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
+}
+function difficultyIndex(n) {
+  let base;
+  if (n <= 30) {
+    base = smoothstep((n - 11) / 19) * 0.4; // 0 -> 0.4 (repère : ~80% -> ~67%)
+  } else {
+    base = 0.4 + smoothstep((n - 31) / 69) * 0.55; // 0.4 -> 0.95 (repère : ~67% -> plancher mesuré ~50-55%)
   }
-  return rows;
+  const breather = n >= 31 ? 0.04 * Math.sin((2 * Math.PI * (n - 31)) / 9) : 0;
+  return Math.max(0.03, Math.min(0.97, base - breather));
+}
+function lerp(a, b, t) {
+  return a + (b - a) * t;
 }
 
-/** Bandes horizontales : chaque rangée a sa propre valeur de PV pleine (ex. blindage alterné). */
-function bands(hpPerRow) {
-  return hpPerRow.map((hp) => fullRow(hp));
+// Décision déterministe case par case (jamais Math.random). Remplissage
+// volontairement fixe et élevé (peu de vides) : la mesure (voir
+// docs/difficulty-study/) montre que peu de briques MAIS résistantes
+// (PV concentré) est réellement plus difficile qu'un remplissage maximal
+// dilué en PV faibles -- même total d'impacts, mais moins de briques
+// distinctes signifie des échanges plus longs contre la MÊME zone, donc
+// plus d'occasions réelles de rater un retour. hitsCapFor (plus bas)
+// reste le filet de sécurité anti-marathon ; c'est surtout le nombre de
+// rangées (voir rowCountFor, volontairement modéré, jamais maximal) qui
+// garde le PV moyen par brique élevé plutôt que dilué sur trop de briques.
+const FILL_PROB = 0.92;
+function cellHp(n, r, c, d) {
+  const hGap = ((r * 7 + c * 13 + n * 5) % 97) / 97;
+  if (hGap >= FILL_PROB) return 0;
+  const pHigh = lerp(0.08, 0.85, d);
+  const pMid = lerp(0.15, 0.15, d);
+  const hHp = ((r * 11 + c * 17 + n * 7 + 3) % 97) / 97;
+  if (hHp < pHigh) return 3;
+  if (hHp < pHigh + pMid) return 2;
+  return 1;
 }
 
-/** Losange/pyramide centré : densité croissante puis décroissante. */
-function diamond(rowCount, hp) {
-  const rows = [];
-  const mid = (rowCount - 1) / 2;
-  for (let r = 0; r < rowCount; r++) {
-    const spread = Math.round((rowCount / 2 - Math.abs(r - mid)) * (BRICK_COLS / rowCount) + 1);
-    const half = Math.max(1, Math.min(BRICK_COLS / 2, spread));
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      const distFromCenter = Math.abs(c - (BRICK_COLS - 1) / 2);
-      cells.push(distFromCenter <= half ? String(hp) : "0");
-    }
-    rows.push(rowsToString(cells));
-  }
-  return rows;
+// Plafond de rangées volontairement MODÉRÉ (10, pas les 14 max autorisés
+// par la marge de confort au-dessus de la raquette) : voir cellHp
+// ci-dessus -- concentrer le PV sur moins de briques s'est mesuré plus
+// difficile que l'étaler sur davantage de rangées.
+function rowCountFor(n, d) {
+  return Math.min(10, Math.round(lerp(4, 10, d)));
 }
 
-/** Appareillage façon mur de briques : une colonne différente laissée vide à chaque rangée, en alternance. */
-function brickWall(rowCount, hp) {
-  const rows = [];
-  for (let r = 0; r < rowCount; r++) {
-    const gapCol = r % 2 === 0 ? 0 : BRICK_COLS - 1;
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      cells.push(c === gapCol ? "0" : String(hp));
-    }
-    rows.push(rowsToString(cells));
-  }
-  return rows;
-}
-
-/** Dispersion déterministe (jamais Math.random -- reproductible) : donne un aspect moins géométrique. */
-function sparse(rowCount, seed, hp) {
-  const rows = [];
-  for (let r = 0; r < rowCount; r++) {
-    const cells = [];
-    for (let c = 0; c < BRICK_COLS; c++) {
-      const v = (r * 7 + c * 13 + seed * 5) % 4;
-      cells.push(v !== 0 ? String(hp) : "0");
-    }
-    rows.push(rowsToString(cells));
-  }
-  return rows;
+// Plafond d'impacts totaux : filet de sécurité anti-marathon (même
+// principe qu'en V3, plafond quasi inchangé -- 150 au lieu de 140). Mesuré
+// (voir docs/difficulty-study/) : au-delà de ce plafond, allonger encore le
+// total d'impacts n'augmente plus significativement la difficulté réelle
+// (le vrai levier est la CONCENTRATION du PV sur moins de briques, voir
+// cellHp/rowCountFor ci-dessus) -- seulement la durée, ce que le cahier des
+// charges V3 interdit déjà explicitement de faire.
+function hitsCapFor(d) {
+  return Math.round(lerp(80, 150, d));
 }
 
 // Calibre targetSeconds à partir du nombre total d'impacts réellement
@@ -198,165 +248,120 @@ function generatedLevel(id, name, rows, powerUpKind) {
   return level;
 }
 
-// 4 paliers de 10 niveaux (11-20, 21-30, 31-40, 41-50) : rangées croissant
-// progressivement (jamais brutalement -- +1 rangée tous les ~4 niveaux),
-// mélange de PV croissant graduellement, style de composition qui change
-// à chaque niveau (jamais deux niveaux consécutifs avec le même
-// générateur) pour éviter le copier-coller, sans introduire de nouvelle
-// mécanique de jeu.
+// V6 : générateur continu 11-100 (remplace le générateur V3 par paliers,
+// voir docs/difficulty-study/ pour la mesure de réussite réelle qui a
+// remplacé l'ancienne heuristique de calibration par targetSeconds seul).
+// Le style change à chaque niveau (jamais deux niveaux consécutifs
+// identiques) pour la variété visuelle ; la DIFFICULTÉ réelle vient de
+// difficultyIndex(n) via cellHp(), appliquée à l'intérieur du masque du
+// style -- deux niveaux de même style à des n différents ont donc la même
+// silhouette mais un remplissage/PV différents.
+const STYLES = ["frame", "checker", "columns", "diamond", "brickWall", "sparse", "bands", "full"];
+const NAME_BY_STYLE = {
+  frame: "Cadre renforcé",
+  checker: "Damier avancé",
+  columns: "Colonnes serrées",
+  diamond: "Losange",
+  brickWall: "Appareillage",
+  sparse: "Dispersion",
+  bands: "Bandes blindées",
+  full: "Mur plein",
+};
 const GENERATED_LEVELS = [];
-{
-  // "bands" et "full" ne produisent une forme distincte des autres styles
-  // QUE lorsqu'un vrai contraste de PV existe (hpMain !== hpAlt) -- sinon
-  // les deux dégénèrent en une simple grille pleine d'une seule valeur,
-  // identique entre elles ET à un "frame" plein. Le choix du style est
-  // donc conditionné au contraste RÉEL calculé pour ce niveau, pas
-  // seulement au palier (le palier seul ne suffit pas à le garantir).
-  const stylesWithContrast = ["frame", "checker", "columns", "diamond", "brickWall", "sparse", "bands", "full"];
-  const stylesFlatHp = ["frame", "checker", "columns", "diamond", "brickWall", "sparse"];
-  const colMasks = ["1100110011", "1010101010", "0110011001", "1001100110"];
-  for (let n = 11; n <= 50; n++) {
-    const tierIndex = Math.floor((n - 11) / 10); // 0..3
-    const rowCount = Math.min(MAX_COMFORTABLE_ROWS - 2, 5 + Math.floor((n - 11) / 4));
-    // Mélange de PV : de plus en plus de renforcé (2/3) au fil des paliers,
-    // jamais 100% renforcé (garderait un rythme trop lent -- cahier des
-    // charges : éviter les niveaux "interminables"). hpAlt toujours
-    // strictement inférieur à hpMain quand un contraste est possible.
-    const hpMain = tierIndex === 0 ? 1 : tierIndex === 1 ? (n % 2 === 0 ? 2 : 1) : tierIndex === 2 ? 2 : n % 2 === 0 ? 3 : 2;
-    const hpAlt = hpMain > 1 ? hpMain - 1 : 1;
-    const hasContrast = hpMain !== hpAlt;
-    const styles = hasContrast ? stylesWithContrast : stylesFlatHp;
-    const style = styles[(n - 11) % styles.length];
-    let rows;
-    switch (style) {
-      case "frame":
-        // Intérieur toujours creux (vrai vide, pas une valeur non-nulle) :
-        // c'est ce qui garde une silhouette de cadre reconnaissable après
-        // le plafonnement d'impacts, à n'importe quel palier -- un
-        // intérieur rempli deviendrait indiscernable d'un "full" une fois
-        // réduit (voir capTotalHits).
-        rows = frame(rowCount, hpMain, "0");
-        break;
-      case "checker":
-        // Toujours alterné avec du VIDE (comme le niveau 8 "Damier"
-        // d'origine), jamais deux valeurs pleines : une checker "pleine"
-        // (aucune case vide) perd sa silhouette distinctive dès que le
-        // plafonnement d'impacts la réduit -- exactement la collision
-        // niveau 43/44 détectée par les tests avant ce correctif.
-        rows = checker(rowCount, hpMain, "0");
-        break;
-      case "columns":
-        rows = columns(rowCount, colMasks[n % colMasks.length], hpMain);
-        break;
-      case "diamond":
-        rows = diamond(rowCount, hpMain);
-        break;
-      case "brickWall":
-        rows = brickWall(rowCount, hpMain);
-        break;
-      case "sparse":
-        rows = sparse(rowCount, n, hpMain);
-        break;
-      case "bands": {
-        const hpPerRow = Array.from({ length: rowCount }, (_, r) => (r % 2 === 0 ? hpMain : hpAlt));
-        rows = bands(hpPerRow);
-        break;
-      }
-      case "full":
-      default:
-        // "Mur quasi plein" avec deux fines colonnes creuses (jamais 100%
-        // uniforme) : reste distinct de "bands" (silhouette par colonnes,
-        // pas par rangées) même après plafonnement d'impacts, ce qu'un
-        // remplissage totalement uniforme ne garantissait pas (collision
-        // niveau 49/50 détectée par les tests avant ce correctif).
-        rows = columns(rowCount, "1110111011", hpMain);
-        break;
+for (let n = 11; n <= 100; n++) {
+  const d = difficultyIndex(n);
+  const rowCount = rowCountFor(n, d);
+  const style = STYLES[(n - 11) % STYLES.length];
+  const mask = styleMask(style, rowCount, n);
+  const rows = [];
+  for (let r = 0; r < rowCount; r++) {
+    const cells = [];
+    for (let c = 0; c < BRICK_COLS; c++) {
+      cells.push(mask[r][c] ? String(cellHp(n, r, c, d)) : "0");
     }
-    // Plafond CROISSANT par palier (pas un plafond unique global) : les
-    // 10 derniers niveaux resteraient sinon tous à la même durée malgré des
-    // motifs visuellement de plus en plus denses -- un vrai palier de
-    // difficulté croissante, toujours borné pour ne jamais devenir un
-    // marathon (140 impacts max, contre 110 pour le niveau 10 déjà validé).
-    const tierHitsCap = [70, 95, 115, 140][tierIndex];
-    rows = capTotalHits(rows, tierHitsCap);
-    const powerUpKind = POWERUP_ROTATION[n % POWERUP_ROTATION.length];
-    const nameByStyle = {
-      frame: "Cadre renforcé",
-      checker: "Damier avancé",
-      columns: "Colonnes serrées",
-      diamond: "Losange",
-      brickWall: "Appareillage",
-      sparse: "Dispersion",
-      bands: "Bandes blindées",
-      full: "Mur plein",
-    };
-    GENERATED_LEVELS.push(generatedLevel(n, `${nameByStyle[style]} ${n}`, rows, powerUpKind));
+    rows.push(rowsToString(cells));
   }
+  const capped = capTotalHits(rows, hitsCapFor(d));
+  const powerUpKind = POWERUP_ROTATION[n % POWERUP_ROTATION.length];
+  GENERATED_LEVELS.push(generatedLevel(n, `${NAME_BY_STYLE[style]} ${n}`, capped, powerUpKind));
 }
 
+// V6 : niveaux 1-10 ALLÉGÉS (moins de rangées/PV, jamais une reconstruction
+// -- même style, même thème, même bonus par niveau qu'en V0-V5) pour
+// atteindre le repère d'onboarding quasi-universel du cahier des charges V6
+// (~95% niveaux 1-3) sous UNE SEULE vie par tentative : sous l'ancien
+// système à 3 vies conservées, le total d'impacts de ces niveaux n'avait
+// jamais été mesuré en taux de réussite réel (V0-V5 ne mesuraient que la
+// terminabilité, jamais la probabilité de succès -- voir
+// docs/difficulty-study/). La mesure a montré qu'ils étaient nettement
+// trop exigeants pour une seule vie (niveau 1 mesuré à 73,5% avant cet
+// allègement, cible ~95%) : moins d'impacts total signifie moins
+// d'occasions cumulées de rater un retour avant la victoire, ce qui est le
+// principal levier mesuré (voir rapport V6) -- pas une élimination de la
+// difficulté, un RÉALIGNEMENT sur le nouveau système de vies.
 export const LEVELS = [
   {
     id: 1,
     name: "Premier contact",
-    targetSeconds: [40, 100],
-    rows: ["1111111111", "1111111111", "1111111111"],
+    targetSeconds: [25, 55],
+    rows: ["1111111111", "1111111111"],
   },
   {
     id: 2,
     name: "La raquette s'échauffe",
-    targetSeconds: [50, 120],
-    rows: ["0111111110", "1111111111", "1111111111", "0111111110"],
+    targetSeconds: [30, 65],
+    rows: ["0111111110", "1111111111", "0111111110"],
   },
   {
     id: 3,
     name: "Premiers blindages",
-    targetSeconds: [60, 150],
-    rows: ["1111111111", "2222222222", "1111111111", "0111111110"],
+    targetSeconds: [35, 80],
+    rows: ["1111111111", "2222222222", "0111111110"],
   },
   {
     id: 4,
     name: "Le multiball entre en jeu",
-    targetSeconds: [60, 160],
-    rows: ["2112211221", "1221122112", "1111111111", "0011111100"],
+    targetSeconds: [45, 100],
+    rows: ["2112211221", "1221122112", "1111111111"],
     powerUpBias: { multiball: 2 },
   },
   {
     id: 5,
     name: "Mur du fond",
-    targetSeconds: [70, 170],
-    rows: ["1111111111", "2222222222", "2222222222", "1111111111", "0001111000"],
+    targetSeconds: [55, 125],
+    rows: ["1111111111", "2222222222", "1111111111", "0001111000"],
   },
   {
     id: 6,
     name: "Laser d'abord",
-    targetSeconds: [70, 170],
-    rows: ["3333333333", "1111111111", "1111111111", "0110000110"],
+    targetSeconds: [55, 125],
+    rows: ["2222222222", "1111111111", "0110000110"],
     powerUpBias: { laser: 2 },
   },
   {
     id: 7,
     name: "La perforation compte",
-    targetSeconds: [70, 180],
-    rows: ["2222222222", "3333333333", "2222222222", "1111111111"],
+    targetSeconds: [60, 135],
+    rows: ["2222222222", "2222222222", "1111111111"],
     powerUpBias: { perforate: 2 },
   },
   {
     id: 8,
     name: "Damier",
-    targetSeconds: [80, 190],
-    rows: ["2020202020", "0202020202", "2020202020", "0202020202", "1111111111"],
+    targetSeconds: [65, 145],
+    rows: ["2020202020", "0202020202", "2020202020", "1111111111"],
   },
   {
     id: 9,
     name: "Colonnes",
-    targetSeconds: [80, 190],
-    rows: ["3030303030", "3030303030", "3131313131", "1111111111", "0011111100"],
+    targetSeconds: [65, 145],
+    rows: ["2020202020", "2020202020", "1111111111", "0011111100"],
   },
   {
     id: 10,
     name: "Dernier verrou",
-    targetSeconds: [90, 210],
-    rows: ["3333333333", "2222222222", "3333333333", "2222222222", "1111111111"],
+    targetSeconds: [75, 165],
+    rows: ["2222222222", "1111111111", "2222222222", "1111111111"],
   },
   ...GENERATED_LEVELS,
 ];

@@ -12,9 +12,11 @@ import {
   recordInterstitialShown,
   canShowInterstitial,
   canOfferRewardedContinue,
+  maxContinuationsForLevel,
   setPremium,
   LEVELS_PER_INTERSTITIAL,
   MIN_INTERSTITIAL_COOLDOWN_MS,
+  SECOND_CONTINUATION_UNLOCK_LEVEL_ID,
 } from "../src/engine/monetization.js";
 
 test("première session de découverte : aucun interstitiel possible même après 3 niveaux réussis", () => {
@@ -89,15 +91,31 @@ test("recordInterstitialShown remet bien le compteur de niveaux à zéro", () =>
 });
 
 test("rewarded 'continuer' : proposé uniquement sur un vrai épuisement des vies (status 'lost')", () => {
-  assert.equal(canOfferRewardedContinue("lost"), true);
-  assert.equal(canOfferRewardedContinue("playing"), false, "un échec de niveau individuel (pas encore Game Over) ne doit jamais l'offrir");
-  assert.equal(canOfferRewardedContinue("ready"), false);
-  assert.equal(canOfferRewardedContinue("won"), false);
+  assert.equal(canOfferRewardedContinue("lost", 0, 1), true);
+  assert.equal(canOfferRewardedContinue("playing", 0, 1), false, "un échec de niveau individuel (pas encore Game Over) ne doit jamais l'offrir");
+  assert.equal(canOfferRewardedContinue("ready", 0, 1), false);
+  assert.equal(canOfferRewardedContinue("won", 0, 1), false);
 });
 
 test("rewarded 'continuer' reste proposé à un joueur Premium (jamais imposé, mais jamais retiré non plus)", () => {
-  // Le cahier des charges V5 (section 3.3) interdit d'IMPOSER le rewarded à
-  // un joueur Premium, mais ne demande jamais de le lui retirer -- la
-  // fonction ne dépend donc d'aucun état Premium, par construction.
-  assert.equal(canOfferRewardedContinue("lost"), true);
+  // Le cahier des charges V5/V6 interdit d'IMPOSER le rewarded à un joueur
+  // Premium, mais ne demande jamais de le lui retirer -- la fonction ne
+  // dépend donc d'aucun état Premium, par construction.
+  assert.equal(canOfferRewardedContinue("lost", 0, 1), true);
+});
+
+// V6 : plafond de continuations par tentative -- "aucune boucle de rewarded
+// illimitée" (cahier des charges V6).
+test("niveaux avant le palier : au plus 1 continuation par tentative", () => {
+  const levelId = SECOND_CONTINUATION_UNLOCK_LEVEL_ID - 1;
+  assert.equal(maxContinuationsForLevel(levelId), 1);
+  assert.equal(canOfferRewardedContinue("lost", 0, levelId), true, "0 continuation déjà utilisée -> encore éligible");
+  assert.equal(canOfferRewardedContinue("lost", 1, levelId), false, "1 continuation déjà utilisée -> plus jamais éligible sur ce niveau avant le palier");
+});
+
+test("niveaux après le palier : jusqu'à 2 continuations par tentative, jamais plus", () => {
+  const levelId = SECOND_CONTINUATION_UNLOCK_LEVEL_ID;
+  assert.equal(maxContinuationsForLevel(levelId), 2);
+  assert.equal(canOfferRewardedContinue("lost", 1, levelId), true, "1 continuation déjà utilisée, plafond 2 -> encore éligible");
+  assert.equal(canOfferRewardedContinue("lost", 2, levelId), false, "2 continuations déjà utilisées -> plus jamais éligible, aucune boucle illimitée");
 });

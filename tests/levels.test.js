@@ -2,11 +2,18 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { LEVELS, validateAllLevels, validateLevel, buildBricksForLevel } from "../src/engine/levels.js";
 
-test("V3 : exactement 50 niveaux réellement présents", () => {
-  assert.equal(LEVELS.length, 50, `${LEVELS.length} niveaux (attendu 50, cahier des charges V3)`);
+test("V6 : exactement 100 niveaux réellement présents", () => {
+  assert.equal(LEVELS.length, 100, `${LEVELS.length} niveaux (attendu 100, cahier des charges V6)`);
 });
 
-test("V3 : aucun niveau n'est un copier-coller strict d'un autre (motifs de briques tous distincts)", () => {
+test("V6 : les niveaux 51-100 sont de vrais nouveaux niveaux, jamais un copier-coller des 1-50", () => {
+  const firstHalf = new Set(LEVELS.slice(0, 50).map((l) => l.rows.join("|")));
+  for (const level of LEVELS.slice(50)) {
+    assert.ok(!firstHalf.has(level.rows.join("|")), `niveau ${level.id} reproduit exactement un motif des niveaux 1-50`);
+  }
+});
+
+test("aucun niveau n'est un copier-coller strict d'un autre (motifs de briques tous distincts)", () => {
   const seen = new Map();
   for (const level of LEVELS) {
     const key = level.rows.join("|");
@@ -17,10 +24,10 @@ test("V3 : aucun niveau n'est un copier-coller strict d'un autre (motifs de briq
   }
 });
 
-test("V3 : aucun niveau généré ne dépasse le plafond d'impacts anti-marathon", () => {
+test("V6 : aucun niveau généré ne dépasse le plafond d'impacts anti-marathon", () => {
   for (const level of LEVELS.slice(10)) {
     const totalHits = buildBricksForLevel(level).reduce((s, b) => s + b.hp, 0);
-    assert.ok(totalHits <= 140, `niveau ${level.id} : ${totalHits} impacts, au-delà du plafond attendu`);
+    assert.ok(totalHits <= 150, `niveau ${level.id} : ${totalHits} impacts, au-delà du plafond attendu`);
   }
 });
 

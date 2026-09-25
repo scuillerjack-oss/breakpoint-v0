@@ -1,0 +1,4145 @@
+{
+  "generatedAt": "2026-09-25T12:54:32.991Z",
+  "seedsPerPlayer": 10,
+  "populationMix": {
+    "Expert": 0.05,
+    "Bon": 0.15,
+    "Moyen": 0.3,
+    "Faible": 0.35,
+    "Debutant": 0.15
+  },
+  "players": [
+    {
+      "name": "Expert",
+      "lagMs": 0,
+      "freezeEveryMs": 0,
+      "freezeDurationMs": 0
+    },
+    {
+      "name": "Bon",
+      "lagMs": 0,
+      "freezeEveryMs": 0,
+      "freezeDurationMs": 0
+    },
+    {
+      "name": "Moyen",
+      "lagMs": 60,
+      "freezeEveryMs": 0,
+      "freezeDurationMs": 0
+    },
+    {
+      "name": "Faible",
+      "lagMs": 120,
+      "freezeEveryMs": 2500,
+      "freezeDurationMs": 150
+    },
+    {
+      "name": "Debutant",
+      "lagMs": 200,
+      "freezeEveryMs": 1500,
+      "freezeDurationMs": 250
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Premier contact",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.8049999999999999,
+        "successWith1Continuation": 0.9,
+        "successWith2Continuations": 0.965
+      }
+    },
+    {
+      "id": 2,
+      "name": "La raquette s'échauffe",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.8049999999999999,
+        "successWith1Continuation": 0.9349999999999999,
+        "successWith2Continuations": 0.95
+      }
+    },
+    {
+      "id": 3,
+      "name": "Premiers blindages",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.67,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.94
+      }
+    },
+    {
+      "id": 4,
+      "name": "Le multiball entre en jeu",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.78,
+        "successWith1Continuation": 0.87,
+        "successWith2Continuations": 0.97
+      }
+    },
+    {
+      "id": 5,
+      "name": "Mur du fond",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6900000000000001,
+        "successWith1Continuation": 0.775,
+        "successWith2Continuations": 0.855
+      }
+    },
+    {
+      "id": 6,
+      "name": "Laser d'abord",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.76,
+        "successWith1Continuation": 0.8899999999999999,
+        "successWith2Continuations": 0.955
+      }
+    },
+    {
+      "id": 7,
+      "name": "La perforation compte",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6,
+        "successWith1Continuation": 0.755,
+        "successWith2Continuations": 0.885
+      }
+    },
+    {
+      "id": 8,
+      "name": "Damier",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6950000000000001,
+        "successWith1Continuation": 0.8650000000000001,
+        "successWith2Continuations": 0.9400000000000001
+      }
+    },
+    {
+      "id": 9,
+      "name": "Colonnes",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.755,
+        "successWith1Continuation": 0.885,
+        "successWith2Continuations": 0.985
+      }
+    },
+    {
+      "id": 10,
+      "name": "Dernier verrou",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.625,
+        "successWith1Continuation": 0.8049999999999999,
+        "successWith2Continuations": 0.885
+      }
+    },
+    {
+      "id": 11,
+      "name": "Cadre renforcé 11",
+      "perPlayer": {
+        "Expert": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.755,
+        "successWith1Continuation": 0.8700000000000001,
+        "successWith2Continuations": 0.93
+      }
+    },
+    {
+      "id": 12,
+      "name": "Damier avancé 12",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.855,
+        "successWith1Continuation": 0.97,
+        "successWith2Continuations": 0.985
+      }
+    },
+    {
+      "id": 13,
+      "name": "Colonnes serrées 13",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0.1
+        }
+      },
+      "blended": {
+        "successA": 0.795,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.955
+      }
+    },
+    {
+      "id": 14,
+      "name": "Losange 14",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5349999999999999,
+        "successWith1Continuation": 0.84,
+        "successWith2Continuations": 0.9400000000000001
+      }
+    },
+    {
+      "id": 15,
+      "name": "Appareillage 15",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.755,
+        "successWith1Continuation": 0.9049999999999999,
+        "successWith2Continuations": 0.95
+      }
+    },
+    {
+      "id": 16,
+      "name": "Dispersion 16",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.7200000000000001,
+        "successWith1Continuation": 0.8250000000000001,
+        "successWith2Continuations": 0.955
+      }
+    },
+    {
+      "id": 17,
+      "name": "Bandes blindées 17",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.675,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.9400000000000001
+      }
+    },
+    {
+      "id": 18,
+      "name": "Mur plein 18",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.7350000000000001,
+        "successWith1Continuation": 0.8899999999999999,
+        "successWith2Continuations": 0.985
+      }
+    },
+    {
+      "id": 19,
+      "name": "Cadre renforcé 19",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.62,
+        "successWith1Continuation": 0.895,
+        "successWith2Continuations": 0.94
+      }
+    },
+    {
+      "id": 20,
+      "name": "Damier avancé 20",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5900000000000001,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.9249999999999999
+      }
+    },
+    {
+      "id": 21,
+      "name": "Colonnes serrées 21",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.76,
+        "successWith1Continuation": 0.8400000000000001,
+        "successWith2Continuations": 0.9199999999999999
+      }
+    },
+    {
+      "id": 22,
+      "name": "Losange 22",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.71,
+        "successWith1Continuation": 0.745,
+        "successWith2Continuations": 0.9099999999999999
+      }
+    },
+    {
+      "id": 23,
+      "name": "Appareillage 23",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0.1
+        }
+      },
+      "blended": {
+        "successA": 0.55,
+        "successWith1Continuation": 0.6,
+        "successWith2Continuations": 0.685
+      }
+    },
+    {
+      "id": 24,
+      "name": "Dispersion 24",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5750000000000001,
+        "successWith1Continuation": 0.675,
+        "successWith2Continuations": 0.8300000000000001
+      }
+    },
+    {
+      "id": 25,
+      "name": "Bandes blindées 25",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6900000000000001,
+        "successWith1Continuation": 0.7849999999999999,
+        "successWith2Continuations": 0.9049999999999999
+      }
+    },
+    {
+      "id": 26,
+      "name": "Mur plein 26",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.7050000000000001,
+        "successWith1Continuation": 0.74,
+        "successWith2Continuations": 0.875
+      }
+    },
+    {
+      "id": 27,
+      "name": "Cadre renforcé 27",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.7100000000000001,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 28,
+      "name": "Damier avancé 28",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.725,
+        "successWith1Continuation": 0.775,
+        "successWith2Continuations": 0.9099999999999999
+      }
+    },
+    {
+      "id": 29,
+      "name": "Colonnes serrées 29",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5700000000000001,
+        "successWith1Continuation": 0.7200000000000001,
+        "successWith2Continuations": 0.9249999999999999
+      }
+    },
+    {
+      "id": 30,
+      "name": "Losange 30",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.625,
+        "successWith1Continuation": 0.76,
+        "successWith2Continuations": 0.895
+      }
+    },
+    {
+      "id": 31,
+      "name": "Appareillage 31",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0.1
+        }
+      },
+      "blended": {
+        "successA": 0.525,
+        "successWith1Continuation": 0.775,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 32,
+      "name": "Dispersion 32",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.66,
+        "successWith1Continuation": 0.8250000000000001,
+        "successWith2Continuations": 0.9099999999999999
+      }
+    },
+    {
+      "id": 33,
+      "name": "Bandes blindées 33",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.645,
+        "successWith1Continuation": 0.86,
+        "successWith2Continuations": 0.925
+      }
+    },
+    {
+      "id": 34,
+      "name": "Mur plein 34",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.635,
+        "successWith1Continuation": 0.8250000000000001,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 35,
+      "name": "Cadre renforcé 35",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.635,
+        "successWith1Continuation": 0.79,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 36,
+      "name": "Damier avancé 36",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.605,
+        "successWith1Continuation": 0.7050000000000001,
+        "successWith2Continuations": 0.9049999999999999
+      }
+    },
+    {
+      "id": 37,
+      "name": "Colonnes serrées 37",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.73,
+        "successWith1Continuation": 0.875,
+        "successWith2Continuations": 0.985
+      }
+    },
+    {
+      "id": 38,
+      "name": "Losange 38",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.645,
+        "successWith1Continuation": 0.845,
+        "successWith2Continuations": 0.88
+      }
+    },
+    {
+      "id": 39,
+      "name": "Appareillage 39",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.505,
+        "successWith1Continuation": 0.61,
+        "successWith2Continuations": 0.655
+      }
+    },
+    {
+      "id": 40,
+      "name": "Dispersion 40",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.62,
+        "successWith1Continuation": 0.7,
+        "successWith2Continuations": 0.82
+      }
+    },
+    {
+      "id": 41,
+      "name": "Bandes blindées 41",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.62,
+        "successWith1Continuation": 0.7849999999999999,
+        "successWith2Continuations": 0.87
+      }
+    },
+    {
+      "id": 42,
+      "name": "Mur plein 42",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6000000000000001,
+        "successWith1Continuation": 0.735,
+        "successWith2Continuations": 0.835
+      }
+    },
+    {
+      "id": 43,
+      "name": "Cadre renforcé 43",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6950000000000001,
+        "successWith1Continuation": 0.76,
+        "successWith2Continuations": 0.875
+      }
+    },
+    {
+      "id": 44,
+      "name": "Damier avancé 44",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.505,
+        "successWith1Continuation": 0.75,
+        "successWith2Continuations": 0.855
+      }
+    },
+    {
+      "id": 45,
+      "name": "Colonnes serrées 45",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.665,
+        "successWith1Continuation": 0.855,
+        "successWith2Continuations": 0.94
+      }
+    },
+    {
+      "id": 46,
+      "name": "Losange 46",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.52,
+        "successWith1Continuation": 0.625,
+        "successWith2Continuations": 0.745
+      }
+    },
+    {
+      "id": 47,
+      "name": "Appareillage 47",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.6050000000000001,
+        "successWith1Continuation": 0.7250000000000001,
+        "successWith2Continuations": 0.76
+      }
+    },
+    {
+      "id": 48,
+      "name": "Dispersion 48",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.615,
+        "successWith1Continuation": 0.73,
+        "successWith2Continuations": 0.8150000000000001
+      }
+    },
+    {
+      "id": 49,
+      "name": "Bandes blindées 49",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.745,
+        "successWith1Continuation": 0.845,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 50,
+      "name": "Mur plein 50",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.665,
+        "successWith1Continuation": 0.795,
+        "successWith2Continuations": 0.895
+      }
+    },
+    {
+      "id": 51,
+      "name": "Cadre renforcé 51",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.625,
+        "successWith1Continuation": 0.725,
+        "successWith2Continuations": 0.86
+      }
+    },
+    {
+      "id": 52,
+      "name": "Damier avancé 52",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.75,
+        "successWith1Continuation": 0.8300000000000001,
+        "successWith2Continuations": 0.895
+      }
+    },
+    {
+      "id": 53,
+      "name": "Colonnes serrées 53",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.7,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.76,
+        "successWith1Continuation": 0.9249999999999999,
+        "successWith2Continuations": 0.94
+      }
+    },
+    {
+      "id": 54,
+      "name": "Losange 54",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.61,
+        "successWith1Continuation": 0.76,
+        "successWith2Continuations": 0.81
+      }
+    },
+    {
+      "id": 55,
+      "name": "Appareillage 55",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5750000000000001,
+        "successWith1Continuation": 0.7200000000000001,
+        "successWith2Continuations": 0.855
+      }
+    },
+    {
+      "id": 56,
+      "name": "Dispersion 56",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.585,
+        "successWith1Continuation": 0.7050000000000001,
+        "successWith2Continuations": 0.79
+      }
+    },
+    {
+      "id": 57,
+      "name": "Bandes blindées 57",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.62,
+        "successWith1Continuation": 0.81,
+        "successWith2Continuations": 0.86
+      }
+    },
+    {
+      "id": 58,
+      "name": "Mur plein 58",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.7050000000000001,
+        "successWith1Continuation": 0.855,
+        "successWith2Continuations": 0.855
+      }
+    },
+    {
+      "id": 59,
+      "name": "Cadre renforcé 59",
+      "perPlayer": {
+        "Expert": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.53,
+        "successWith1Continuation": 0.735,
+        "successWith2Continuations": 0.9199999999999999
+      }
+    },
+    {
+      "id": 60,
+      "name": "Damier avancé 60",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.475,
+        "successWith1Continuation": 0.66,
+        "successWith2Continuations": 0.7250000000000001
+      }
+    },
+    {
+      "id": 61,
+      "name": "Colonnes serrées 61",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.71,
+        "successWith1Continuation": 0.8400000000000001,
+        "successWith2Continuations": 0.875
+      }
+    },
+    {
+      "id": 62,
+      "name": "Losange 62",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.57,
+        "successWith1Continuation": 0.685,
+        "successWith2Continuations": 0.78
+      }
+    },
+    {
+      "id": 63,
+      "name": "Appareillage 63",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.525,
+        "successWith1Continuation": 0.625,
+        "successWith2Continuations": 0.7100000000000001
+      }
+    },
+    {
+      "id": 64,
+      "name": "Dispersion 64",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.1,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.605,
+        "successWith1Continuation": 0.745,
+        "successWith2Continuations": 0.83
+      }
+    },
+    {
+      "id": 65,
+      "name": "Bandes blindées 65",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.61,
+        "successWith1Continuation": 0.76,
+        "successWith2Continuations": 0.8400000000000001
+      }
+    },
+    {
+      "id": 66,
+      "name": "Mur plein 66",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.67,
+        "successWith1Continuation": 0.7050000000000001,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 67,
+      "name": "Cadre renforcé 67",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.635,
+        "successWith1Continuation": 0.77,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 68,
+      "name": "Damier avancé 68",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.64,
+        "successWith1Continuation": 0.6900000000000001,
+        "successWith2Continuations": 0.775
+      }
+    },
+    {
+      "id": 69,
+      "name": "Colonnes serrées 69",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.64,
+        "successWith1Continuation": 0.76,
+        "successWith2Continuations": 0.88
+      }
+    },
+    {
+      "id": 70,
+      "name": "Losange 70",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.47000000000000003,
+        "successWith1Continuation": 0.62,
+        "successWith2Continuations": 0.79
+      }
+    },
+    {
+      "id": 71,
+      "name": "Appareillage 71",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.1,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.51,
+        "successWith1Continuation": 0.5750000000000001,
+        "successWith2Continuations": 0.66
+      }
+    },
+    {
+      "id": 72,
+      "name": "Dispersion 72",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.54,
+        "successWith1Continuation": 0.62,
+        "successWith2Continuations": 0.79
+      }
+    },
+    {
+      "id": 73,
+      "name": "Bandes blindées 73",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.57,
+        "successWith1Continuation": 0.6900000000000001,
+        "successWith2Continuations": 0.875
+      }
+    },
+    {
+      "id": 74,
+      "name": "Mur plein 74",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.71,
+        "successWith1Continuation": 0.8049999999999999,
+        "successWith2Continuations": 0.87
+      }
+    },
+    {
+      "id": 75,
+      "name": "Cadre renforcé 75",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.605,
+        "successWith1Continuation": 0.775,
+        "successWith2Continuations": 0.8400000000000001
+      }
+    },
+    {
+      "id": 76,
+      "name": "Damier avancé 76",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.505,
+        "successWith1Continuation": 0.625,
+        "successWith2Continuations": 0.64
+      }
+    },
+    {
+      "id": 77,
+      "name": "Colonnes serrées 77",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.7,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.57,
+        "successWith1Continuation": 0.8049999999999999,
+        "successWith2Continuations": 0.97
+      }
+    },
+    {
+      "id": 78,
+      "name": "Losange 78",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.48500000000000004,
+        "successWith1Continuation": 0.585,
+        "successWith2Continuations": 0.775
+      }
+    },
+    {
+      "id": 79,
+      "name": "Appareillage 79",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5700000000000001,
+        "successWith1Continuation": 0.655,
+        "successWith2Continuations": 0.7050000000000001
+      }
+    },
+    {
+      "id": 80,
+      "name": "Dispersion 80",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0.1
+        }
+      },
+      "blended": {
+        "successA": 0.64,
+        "successWith1Continuation": 0.74,
+        "successWith2Continuations": 0.82
+      }
+    },
+    {
+      "id": 81,
+      "name": "Bandes blindées 81",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.605,
+        "successWith1Continuation": 0.725,
+        "successWith2Continuations": 0.775
+      }
+    },
+    {
+      "id": 82,
+      "name": "Mur plein 82",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.61,
+        "successWith1Continuation": 0.6900000000000001,
+        "successWith2Continuations": 0.75
+      }
+    },
+    {
+      "id": 83,
+      "name": "Cadre renforcé 83",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.645,
+        "successWith1Continuation": 0.675,
+        "successWith2Continuations": 0.7749999999999999
+      }
+    },
+    {
+      "id": 84,
+      "name": "Damier avancé 84",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.625,
+        "successWith1Continuation": 0.81,
+        "successWith2Continuations": 0.855
+      }
+    },
+    {
+      "id": 85,
+      "name": "Colonnes serrées 85",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.515,
+        "successWith1Continuation": 0.74,
+        "successWith2Continuations": 0.86
+      }
+    },
+    {
+      "id": 86,
+      "name": "Losange 86",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0.2
+        },
+        "Faible": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.44,
+        "successWith1Continuation": 0.51,
+        "successWith2Continuations": 0.645
+      }
+    },
+    {
+      "id": 87,
+      "name": "Appareillage 87",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.525,
+        "successWith1Continuation": 0.7250000000000001,
+        "successWith2Continuations": 0.825
+      }
+    },
+    {
+      "id": 88,
+      "name": "Dispersion 88",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.505,
+        "successWith1Continuation": 0.675,
+        "successWith2Continuations": 0.745
+      }
+    },
+    {
+      "id": 89,
+      "name": "Bandes blindées 89",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.62,
+        "successWith1Continuation": 0.7,
+        "successWith2Continuations": 0.7999999999999999
+      }
+    },
+    {
+      "id": 90,
+      "name": "Mur plein 90",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5700000000000001,
+        "successWith1Continuation": 0.7350000000000001,
+        "successWith2Continuations": 0.82
+      }
+    },
+    {
+      "id": 91,
+      "name": "Cadre renforcé 91",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.3,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.5750000000000001,
+        "successWith1Continuation": 0.7050000000000001,
+        "successWith2Continuations": 0.8400000000000001
+      }
+    },
+    {
+      "id": 92,
+      "name": "Damier avancé 92",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.8,
+          "timeoutRate": 0.2
+        },
+        "Faible": {
+          "successA": 0.2,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0.1
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.42,
+        "successWith1Continuation": 0.5750000000000001,
+        "successWith2Continuations": 0.645
+      }
+    },
+    {
+      "id": 93,
+      "name": "Colonnes serrées 93",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.3,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.66,
+        "successWith1Continuation": 0.755,
+        "successWith2Continuations": 0.9099999999999999
+      }
+    },
+    {
+      "id": 94,
+      "name": "Losange 94",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.3,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.52,
+        "successWith1Continuation": 0.5700000000000001,
+        "successWith2Continuations": 0.6050000000000001
+      }
+    },
+    {
+      "id": 95,
+      "name": "Appareillage 95",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.7,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.455,
+        "successWith1Continuation": 0.6950000000000001,
+        "successWith2Continuations": 0.745
+      }
+    },
+    {
+      "id": 96,
+      "name": "Dispersion 96",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.8,
+          "successWith1Continuation": 0.8,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0.1
+        },
+        "Faible": {
+          "successA": 0.4,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0,
+          "successWith2Continuations": 0.1,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.58,
+        "successWith1Continuation": 0.65,
+        "successWith2Continuations": 0.8
+      }
+    },
+    {
+      "id": 97,
+      "name": "Bandes blindées 97",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0.1,
+          "successWith1Continuation": 0.4,
+          "successWith2Continuations": 0.5,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.55,
+        "successWith1Continuation": 0.7,
+        "successWith2Continuations": 0.8899999999999999
+      }
+    },
+    {
+      "id": 98,
+      "name": "Mur plein 98",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.5,
+          "successWith2Continuations": 0.6,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.2,
+          "successWith2Continuations": 0.4,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.675,
+        "successWith1Continuation": 0.7050000000000001,
+        "successWith2Continuations": 0.77
+      }
+    },
+    {
+      "id": 99,
+      "name": "Cadre renforcé 99",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.5,
+          "successWith1Continuation": 0.9,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.2,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.675,
+        "successWith1Continuation": 0.83,
+        "successWith2Continuations": 0.845
+      }
+    },
+    {
+      "id": 100,
+      "name": "Damier avancé 100",
+      "perPlayer": {
+        "Expert": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Bon": {
+          "successA": 1,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Moyen": {
+          "successA": 0.9,
+          "successWith1Continuation": 1,
+          "successWith2Continuations": 1,
+          "timeoutRate": 0
+        },
+        "Faible": {
+          "successA": 0.6,
+          "successWith1Continuation": 0.6,
+          "successWith2Continuations": 0.9,
+          "timeoutRate": 0
+        },
+        "Debutant": {
+          "successA": 0,
+          "successWith1Continuation": 0.1,
+          "successWith2Continuations": 0.1,
+          "timeoutRate": 0
+        }
+      },
+      "blended": {
+        "successA": 0.68,
+        "successWith1Continuation": 0.725,
+        "successWith2Continuations": 0.83
+      }
+    }
+  ]
+}

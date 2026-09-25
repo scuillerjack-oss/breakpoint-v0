@@ -1,7 +1,8 @@
-import { createLevelState, brickRect } from "./engine/state.js";
+import { createLevelState, brickRect, grantContinuation } from "./engine/state.js";
 import { tick } from "./engine/simulation.js";
 import { LEVELS } from "./engine/levels.js";
 import { loadSave, writeSave, markLevelUnlocked, markTutorialSeen } from "./engine/save.js";
+import { canOfferRewardedContinue } from "./engine/monetization.js";
 import { createInputController } from "./ui/input.js";
 import { drawFrame } from "./ui/render.js";
 import { setSafeAreaReserve } from "./ui/viewport.js";
@@ -33,8 +34,17 @@ const tutorial = createTutorialController(save, tutorialToast);
 
 let state = null;
 let levelIndex = 0;
-let runLives = 3;
+// V6 : une seule vie gratuite par tentative (cahier des charges V6) --
+// remplace les 3 vies conservées entre niveaux de V0-V5. Il n'existe plus
+// de "Game Over de campagne" qui renvoie au niveau 1 : perdre une tentative
+// n'affecte plus que LE NIVEAU en cours (voir showLevelResult(false)).
+let runLives = 1;
 let runScore = 0;
+// Continuations rewarded déjà utilisées pour LA TENTATIVE en cours (remis à
+// zéro à chaque vrai départ de niveau, voir startLevel) -- c'est ce
+// compteur qui empêche toute boucle de rewarded illimitée (cahier des
+// charges V6), via monetization.canOfferRewardedContinue.
+let continuationsUsedThisAttempt = 0;
 let appPhase = "menu"; // menu | countdown | playing | paused | level_result
 let ballTrail = [];
 let hasMovedOnce = false;
@@ -141,6 +151,12 @@ function showSettings() {
 
 function startLevel(index) {
   levelIndex = Math.max(0, Math.min(LEVELS.length - 1, index));
+  // V6 : chaque tentative démarre avec exactement 1 vie gratuite, jamais
+  // reportée d'un niveau ou d'une tentative précédente (cahier des charges
+  // V6) -- le score, lui, reste un compteur global du run, non concerné par
+  // ce changement.
+  runLives = 1;
+  continuationsUsedThisAttempt = 0;
   state = createLevelState(levelIndex, { lives: runLives, score: runScore });
   input.resetTarget(state.paddle.x + state.paddle.w / 2);
   ballTrail = [];
@@ -237,23 +253,44 @@ function showLevelResult(won) {
       startLevel(isLast ? 0 : levelIndex + 1);
     });
   } else {
+    // V6 : la vie gratuite de CETTE tentative est épuisée. Le joueur peut
+    // TOUJOURS refuser toute publicité et recommencer gratuitement depuis le
+    // début (cahier des charges V6) -- ce bouton est donc toujours présent.
+    // Une continuation rewarded n'est proposée qu'en dessous du plafond de
+    // CE niveau (voir monetization.canOfferRewardedContinue -- jamais une
+    // boucle illimitée) : encore aucun SDK publicitaire réel dans cette PWA
+    // (cahier des charges V5/V6, section 8), donc le bouton l'indique
+    // honnêtement plutôt que de simuler une fausse publicité (voir rapport
+    // officiel V6).
+    const canContinue = canOfferRewardedContinue(state.status, continuationsUsedThisAttempt, state.levelId);
     renderOverlay(`
       <div class="overlay">
-        <h1>Partie terminée</h1>
+        <h1>Vie perdue</h1>
         <p>Score : ${runScore}</p>
-        <button class="overlay-btn" id="btn-retry">Recommencer</button>
+        ${
+          canContinue
+            ? `<button class="overlay-btn" id="btn-continue">Continuer (vidéo bonus -- bêta : accordée directement, sans pub réelle)</button>`
+            : ""
+        }
+        <button class="overlay-btn secondary" id="btn-retry">Recommencer le niveau</button>
         <button class="overlay-btn secondary" id="btn-menu2">Menu</button>
       </div>
     `);
+    if (canContinue) {
+      document.getElementById("btn-continue").addEventListener("click", () => {
+        continuationsUsedThisAttempt += 1;
+        grantContinuation(state);
+        runLives = state.lives;
+        updateHud();
+        clearOverlay();
+        appPhase = "playing";
+      });
+    }
     document.getElementById("btn-retry").addEventListener("click", () => {
-      runLives = 3;
-      runScore = 0;
       startLevel(levelIndex);
     });
   }
   document.getElementById("btn-menu2").addEventListener("click", () => {
-    runLives = 3;
-    runScore = 0;
     showMenu();
   });
 }
@@ -360,6 +397,20 @@ function frame(now) {
 resizeCanvas();
 showMenu();
 requestAnimationFrame(frame);
+
+// V6 : hook de test/bêta ciblée UNIQUEMENT (cahier des charges V6, section
+// bêta -- "je ne veux pas devoir jouer manuellement les 100 niveaux dans
+// l'ordre"). Saute directement à un niveau donné (1-indexé) avec le menu
+// comme point de départ (mêmes règles qu'un vrai départ de niveau : 1 vie,
+// compteur de continuations remis à zéro). Jamais exposé dans l'UI du jeu,
+// jamais un raccourci accessible aux joueurs -- réservé à un test manuel
+// via la console, ou à un futur script Playwright ciblé.
+window.__breakpointDebugJumpToLevel = (levelNumber) => {
+  const index = Math.max(0, Math.min(LEVELS.length - 1, Math.round(levelNumber) - 1));
+  markLevelUnlocked(save, index); // permet de rejouer "Continuer" depuis ce point sans perdre la vraie progression du testeur
+  startMusic();
+  startLevel(index);
+};
 
 // Hook de test UNIQUEMENT (utilisé par scripts/check-performance.mjs pour
 // forcer un scénario de stress reproductible — multiball + beaucoup de
