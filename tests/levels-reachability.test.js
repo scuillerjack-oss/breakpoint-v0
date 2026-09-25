@@ -7,12 +7,36 @@
 // produit) et échoue si un niveau ne se termine pas dans un temps large mais
 // borné. C'est ce test qui aurait détecté le niveau 1 bloqué remonté en
 // bêta V0, et qui empêche qu'un futur niveau reproduise le même problème.
+//
+// V5 : ce test se voulait déjà déterministe ("jamais Math.random"), mais ne
+// contrôlait que SES propres profils de bruit -- pas le tirage aléatoire
+// réel des power-ups dans applyPowerUp() (src/engine/simulation.js), qui
+// reste un Math.random() non semé. Sous un tirage suffisamment défavorable
+// (aucun bonus utile ne tombe jamais), un niveau pouvait de façon rare mais
+// réelle dépasser sa borne de temps -- flake reproduit et confirmé (échec
+// réel constaté sur le run CI GitHub Actions du commit c709fac, niveau 13,
+// puis reproduit localement 1 fois sur 5 exécutions). Corrigé en semant
+// Math.random avec un générateur à graine FIXE pour la durée de chaque
+// simulation (jamais dans le moteur lui-même, qui reste inchangé et garde
+// son vrai aléa en jeu normal) : le test redevient réellement reproductible
+// à l'identique, comme son intention initiale l'affirmait déjà.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createLevelState } from "../src/engine/state.js";
 import { tick } from "../src/engine/simulation.js";
 import { LEVELS } from "../src/engine/levels.js";
 import { ARENA_W } from "../src/engine/constants.js";
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 // Profils de bruit déterministes (jamais Math.random -- un test doit être
 // reproductible à l'identique) simulant plusieurs façons réalistes, mais
@@ -54,17 +78,27 @@ for (let i = 0; i < LEVELS.length; i++) {
     // détection de blocage total, comme le niveau 1 en bêta V0, qui prenait
     // plus de 300s sans jamais finir).
     const bound = Math.max(150, maxTargetS * 3);
-    for (const noiseFn of NOISE_PROFILES) {
-      const result = simulateLevel(i, noiseFn, bound);
-      assert.equal(
-        result.status,
-        "won",
-        `niveau ${level.id} non terminé après ${bound}s (${result.remaining}/${result.total} briques restantes) -- brique(s) probablement inaccessible(s)`
-      );
-      assert.ok(
-        result.elapsedS <= bound,
-        `niveau ${level.id} a pris ${result.elapsedS.toFixed(1)}s, au-delà de la borne ${bound}s`
-      );
+    const originalRandom = Math.random;
+    try {
+      for (let p = 0; p < NOISE_PROFILES.length; p++) {
+        // Graine fixe par (niveau, profil) : reproductible à l'identique
+        // d'une exécution à l'autre, y compris en CI -- voir note V5
+        // ci-dessus. N'affecte jamais le tirage réel en jeu normal (restauré
+        // juste après).
+        Math.random = mulberry32(level.id * 1000 + p);
+        const result = simulateLevel(i, NOISE_PROFILES[p], bound);
+        assert.equal(
+          result.status,
+          "won",
+          `niveau ${level.id} non terminé après ${bound}s (${result.remaining}/${result.total} briques restantes) -- brique(s) probablement inaccessible(s)`
+        );
+        assert.ok(
+          result.elapsedS <= bound,
+          `niveau ${level.id} a pris ${result.elapsedS.toFixed(1)}s, au-delà de la borne ${bound}s`
+        );
+      }
+    } finally {
+      Math.random = originalRandom;
     }
   });
 }
