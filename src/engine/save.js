@@ -2,6 +2,8 @@
 // vus, réglages audio/haptique. Jamais l'état de partie en cours en détail
 // (position de balle etc.) — seulement ce qui doit survivre une fermeture,
 // conformément au cahier des charges (section 17).
+import { createMonetizationState } from "./monetization.js";
+
 const KEY = "breakpoint-v0-save";
 const VERSION = 1;
 
@@ -11,6 +13,12 @@ function defaults() {
     unlockedLevelIndex: 0,
     tutorialsSeen: {},
     settings: { music: true, sfx: true, haptics: true },
+    // V5 : état économique persistant (cahier des charges V5, section 4 --
+    // "compteur de niveaux, temporisation 5 minutes... état Premium et
+    // persistance"). Jamais lu par une UI publicitaire réelle dans cette
+    // version (voir src/engine/monetization.js) : préparation d'état
+    // uniquement, aucune fausse publicité ni faux achat.
+    monetization: createMonetizationState(),
   };
 }
 
@@ -20,10 +28,16 @@ export function loadSave() {
     if (!raw) return defaults();
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return defaults();
-    // Pas de migration nécessaire tant qu'un seul schéma (V1) existe — voir
-    // README_REPRISE pour la procédure à suivre le jour où ça change (jamais
-    // perdre silencieusement une progression après mise à jour).
-    return { ...defaults(), ...parsed, settings: { ...defaults().settings, ...(parsed.settings || {}) } };
+    // Pas de migration destructive nécessaire : chaque nouvelle clé (ex.
+    // "monetization" ajoutée en V5) est fusionnée avec ses valeurs par
+    // défaut, jamais None de perte silencieuse de progression existante --
+    // voir README_REPRISE pour la procédure générale.
+    return {
+      ...defaults(),
+      ...parsed,
+      settings: { ...defaults().settings, ...(parsed.settings || {}) },
+      monetization: { ...defaults().monetization, ...(parsed.monetization || {}) },
+    };
   } catch {
     return defaults();
   }
