@@ -1,0 +1,443 @@
+{
+  "generatedAt": "2026-09-25T12:57:22.424Z",
+  "derivedParameters": {
+    "avgLevelDurationMin": 2.0458,
+    "avgSuccessA_noContinuation": 0.6274,
+    "avgSuccessFinal_withRealContinuationPolicy": 0.7989,
+    "lifeLostRatePerAttempt": 0.3726,
+    "expectedAttemptsToClearAvg": 1.2517,
+    "effectiveMinPerLevelCleared": 2.5608,
+    "interstitialGapMin": 7.6824,
+    "secondContinuationUnlockLevelId": 61
+  },
+  "platformCommission": 0.15,
+  "premiumPriceEur": 1.99,
+  "scenarios": {
+    "pessimiste": {
+      "dauMauRatio": 0.08,
+      "sessionsPerDay": 2,
+      "sessionLengthMin": 2.5,
+      "interstitialEcpm": 5,
+      "rewardedEcpm": 12,
+      "rewardedOptIn": 0.25,
+      "premiumMonthlyNewConversion": 0.004,
+      "premiumCumulativePenetration": 0.02
+    },
+    "central": {
+      "dauMauRatio": 0.14,
+      "sessionsPerDay": 3,
+      "sessionLengthMin": 3.5,
+      "interstitialEcpm": 9,
+      "rewardedEcpm": 20,
+      "rewardedOptIn": 0.45,
+      "premiumMonthlyNewConversion": 0.012,
+      "premiumCumulativePenetration": 0.06
+    },
+    "optimiste": {
+      "dauMauRatio": 0.2,
+      "sessionsPerDay": 4,
+      "sessionLengthMin": 5,
+      "interstitialEcpm": 13,
+      "rewardedEcpm": 30,
+      "rewardedOptIn": 0.65,
+      "premiumMonthlyNewConversion": 0.025,
+      "premiumCumulativePenetration": 0.12
+    }
+  },
+  "monthlyTable": [
+    {
+      "mau": 10,
+      "scenario": "pessimiste",
+      "dau": 1,
+      "totalMonthlyPlayHours": 2,
+      "interstitialsPerMonth": 15.31,
+      "interstitialRevenue": 0.08,
+      "lifeLostEventsPerMonth": 21.85,
+      "rewardedViewsPerMonth": 5.46,
+      "rewardedRevenue": 0.07,
+      "adsRevenueNet": 0.14,
+      "premiumRevenueGross": 0.08,
+      "premiumRevenueNet": 0.07,
+      "totalRevenueNet": 0.21,
+      "netRevenue": 0.21,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 10,
+      "scenario": "central",
+      "dau": 1,
+      "totalMonthlyPlayHours": 7.35,
+      "interstitialsPerMonth": 53.96,
+      "interstitialRevenue": 0.49,
+      "lifeLostEventsPerMonth": 80.31,
+      "rewardedViewsPerMonth": 36.14,
+      "rewardedRevenue": 0.72,
+      "adsRevenueNet": 1.21,
+      "premiumRevenueGross": 0.24,
+      "premiumRevenueNet": 0.2,
+      "totalRevenueNet": 1.41,
+      "netRevenue": 1.41,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 10,
+      "scenario": "optimiste",
+      "dau": 2,
+      "totalMonthlyPlayHours": 20,
+      "interstitialsPerMonth": 137.46,
+      "interstitialRevenue": 1.79,
+      "lifeLostEventsPerMonth": 218.52,
+      "rewardedViewsPerMonth": 142.04,
+      "rewardedRevenue": 4.26,
+      "adsRevenueNet": 6.05,
+      "premiumRevenueGross": 0.5,
+      "premiumRevenueNet": 0.42,
+      "totalRevenueNet": 6.47,
+      "netRevenue": 6.47,
+      "netRevenuePerMau": 0.6471
+    },
+    {
+      "mau": 100,
+      "scenario": "pessimiste",
+      "dau": 8,
+      "totalMonthlyPlayHours": 20,
+      "interstitialsPerMonth": 153.08,
+      "interstitialRevenue": 0.77,
+      "lifeLostEventsPerMonth": 218.52,
+      "rewardedViewsPerMonth": 54.63,
+      "rewardedRevenue": 0.66,
+      "adsRevenueNet": 1.42,
+      "premiumRevenueGross": 0.8,
+      "premiumRevenueNet": 0.68,
+      "totalRevenueNet": 2.1,
+      "netRevenue": 2.1,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 100,
+      "scenario": "central",
+      "dau": 14,
+      "totalMonthlyPlayHours": 73.5,
+      "interstitialsPerMonth": 539.59,
+      "interstitialRevenue": 4.86,
+      "lifeLostEventsPerMonth": 803.07,
+      "rewardedViewsPerMonth": 361.38,
+      "rewardedRevenue": 7.23,
+      "adsRevenueNet": 12.08,
+      "premiumRevenueGross": 2.39,
+      "premiumRevenueNet": 2.03,
+      "totalRevenueNet": 14.11,
+      "netRevenue": 14.11,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 100,
+      "scenario": "optimiste",
+      "dau": 20,
+      "totalMonthlyPlayHours": 200,
+      "interstitialsPerMonth": 1374.56,
+      "interstitialRevenue": 17.87,
+      "lifeLostEventsPerMonth": 2185.22,
+      "rewardedViewsPerMonth": 1420.39,
+      "rewardedRevenue": 42.61,
+      "adsRevenueNet": 60.48,
+      "premiumRevenueGross": 4.97,
+      "premiumRevenueNet": 4.23,
+      "totalRevenueNet": 64.71,
+      "netRevenue": 64.71,
+      "netRevenuePerMau": 0.6471
+    },
+    {
+      "mau": 1000,
+      "scenario": "pessimiste",
+      "dau": 80,
+      "totalMonthlyPlayHours": 200,
+      "interstitialsPerMonth": 1530.76,
+      "interstitialRevenue": 7.65,
+      "lifeLostEventsPerMonth": 2185.22,
+      "rewardedViewsPerMonth": 546.31,
+      "rewardedRevenue": 6.56,
+      "adsRevenueNet": 14.21,
+      "premiumRevenueGross": 7.96,
+      "premiumRevenueNet": 6.77,
+      "totalRevenueNet": 20.98,
+      "netRevenue": 20.98,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 1000,
+      "scenario": "central",
+      "dau": 140,
+      "totalMonthlyPlayHours": 735,
+      "interstitialsPerMonth": 5395.94,
+      "interstitialRevenue": 48.56,
+      "lifeLostEventsPerMonth": 8030.69,
+      "rewardedViewsPerMonth": 3613.81,
+      "rewardedRevenue": 72.28,
+      "adsRevenueNet": 120.84,
+      "premiumRevenueGross": 23.88,
+      "premiumRevenueNet": 20.3,
+      "totalRevenueNet": 141.14,
+      "netRevenue": 141.14,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 1000,
+      "scenario": "optimiste",
+      "dau": 200,
+      "totalMonthlyPlayHours": 2000,
+      "interstitialsPerMonth": 13745.64,
+      "interstitialRevenue": 178.69,
+      "lifeLostEventsPerMonth": 21852.22,
+      "rewardedViewsPerMonth": 14203.94,
+      "rewardedRevenue": 426.12,
+      "adsRevenueNet": 604.81,
+      "premiumRevenueGross": 49.75,
+      "premiumRevenueNet": 42.29,
+      "totalRevenueNet": 647.1,
+      "netRevenue": 647.1,
+      "netRevenuePerMau": 0.6471
+    },
+    {
+      "mau": 10000,
+      "scenario": "pessimiste",
+      "dau": 800,
+      "totalMonthlyPlayHours": 2000,
+      "interstitialsPerMonth": 15307.64,
+      "interstitialRevenue": 76.54,
+      "lifeLostEventsPerMonth": 21852.22,
+      "rewardedViewsPerMonth": 5463.05,
+      "rewardedRevenue": 65.56,
+      "adsRevenueNet": 142.09,
+      "premiumRevenueGross": 79.6,
+      "premiumRevenueNet": 67.66,
+      "totalRevenueNet": 209.75,
+      "netRevenue": 209.75,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 10000,
+      "scenario": "central",
+      "dau": 1400,
+      "totalMonthlyPlayHours": 7350,
+      "interstitialsPerMonth": 53959.43,
+      "interstitialRevenue": 485.63,
+      "lifeLostEventsPerMonth": 80306.91,
+      "rewardedViewsPerMonth": 36138.11,
+      "rewardedRevenue": 722.76,
+      "adsRevenueNet": 1208.4,
+      "premiumRevenueGross": 238.8,
+      "premiumRevenueNet": 202.98,
+      "totalRevenueNet": 1411.38,
+      "netRevenue": 1411.38,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 10000,
+      "scenario": "optimiste",
+      "dau": 2000,
+      "totalMonthlyPlayHours": 20000,
+      "interstitialsPerMonth": 137456.36,
+      "interstitialRevenue": 1786.93,
+      "lifeLostEventsPerMonth": 218522.2,
+      "rewardedViewsPerMonth": 142039.43,
+      "rewardedRevenue": 4261.18,
+      "adsRevenueNet": 6048.12,
+      "premiumRevenueGross": 497.5,
+      "premiumRevenueNet": 422.88,
+      "totalRevenueNet": 6470.99,
+      "netRevenue": 6470.99,
+      "netRevenuePerMau": 0.6471
+    },
+    {
+      "mau": 100000,
+      "scenario": "pessimiste",
+      "dau": 8000,
+      "totalMonthlyPlayHours": 20000,
+      "interstitialsPerMonth": 153076.4,
+      "interstitialRevenue": 765.38,
+      "lifeLostEventsPerMonth": 218522.2,
+      "rewardedViewsPerMonth": 54630.55,
+      "rewardedRevenue": 655.57,
+      "adsRevenueNet": 1420.95,
+      "premiumRevenueGross": 796,
+      "premiumRevenueNet": 676.6,
+      "totalRevenueNet": 2097.55,
+      "netRevenue": 2097.55,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 100000,
+      "scenario": "central",
+      "dau": 14000,
+      "totalMonthlyPlayHours": 73500,
+      "interstitialsPerMonth": 539594.31,
+      "interstitialRevenue": 4856.35,
+      "lifeLostEventsPerMonth": 803069.08,
+      "rewardedViewsPerMonth": 361381.09,
+      "rewardedRevenue": 7227.62,
+      "adsRevenueNet": 12083.97,
+      "premiumRevenueGross": 2388,
+      "premiumRevenueNet": 2029.8,
+      "totalRevenueNet": 14113.77,
+      "netRevenue": 14113.77,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 100000,
+      "scenario": "optimiste",
+      "dau": 20000,
+      "totalMonthlyPlayHours": 200000,
+      "interstitialsPerMonth": 1374563.58,
+      "interstitialRevenue": 17869.33,
+      "lifeLostEventsPerMonth": 2185222,
+      "rewardedViewsPerMonth": 1420394.3,
+      "rewardedRevenue": 42611.83,
+      "adsRevenueNet": 60481.16,
+      "premiumRevenueGross": 4975,
+      "premiumRevenueNet": 4228.75,
+      "totalRevenueNet": 64709.91,
+      "netRevenue": 64709.91,
+      "netRevenuePerMau": 0.6471
+    },
+    {
+      "mau": 1000000,
+      "scenario": "pessimiste",
+      "dau": 80000,
+      "totalMonthlyPlayHours": 200000,
+      "interstitialsPerMonth": 1530763.99,
+      "interstitialRevenue": 7653.82,
+      "lifeLostEventsPerMonth": 2185222,
+      "rewardedViewsPerMonth": 546305.5,
+      "rewardedRevenue": 6555.67,
+      "adsRevenueNet": 14209.49,
+      "premiumRevenueGross": 7960,
+      "premiumRevenueNet": 6766,
+      "totalRevenueNet": 20975.49,
+      "netRevenue": 20975.49,
+      "netRevenuePerMau": 0.021
+    },
+    {
+      "mau": 1000000,
+      "scenario": "central",
+      "dau": 140000,
+      "totalMonthlyPlayHours": 735000,
+      "interstitialsPerMonth": 5395943.07,
+      "interstitialRevenue": 48563.49,
+      "lifeLostEventsPerMonth": 8030690.84,
+      "rewardedViewsPerMonth": 3613810.88,
+      "rewardedRevenue": 72276.22,
+      "adsRevenueNet": 120839.71,
+      "premiumRevenueGross": 23880,
+      "premiumRevenueNet": 20298,
+      "totalRevenueNet": 141137.71,
+      "netRevenue": 141137.71,
+      "netRevenuePerMau": 0.1411
+    },
+    {
+      "mau": 1000000,
+      "scenario": "optimiste",
+      "dau": 200000,
+      "totalMonthlyPlayHours": 2000000,
+      "interstitialsPerMonth": 13745635.85,
+      "interstitialRevenue": 178693.27,
+      "lifeLostEventsPerMonth": 21852219.96,
+      "rewardedViewsPerMonth": 14203942.97,
+      "rewardedRevenue": 426118.29,
+      "adsRevenueNet": 604811.56,
+      "premiumRevenueGross": 49750,
+      "premiumRevenueNet": 42287.5,
+      "totalRevenueNet": 647099.06,
+      "netRevenue": 647099.06,
+      "netRevenuePerMau": 0.6471
+    }
+  ],
+  "sensitivity": {
+    "baseNetRevenuePerMau": 0.1411,
+    "mau": 100000,
+    "results": [
+      {
+        "label": "DAU/MAU 8% (vs 14% central)",
+        "netRevenuePerMau": 0.0893,
+        "deltaVsCentralPct": -36.71
+      },
+      {
+        "label": "DAU/MAU 20% (vs 14% central)",
+        "netRevenuePerMau": 0.1929,
+        "deltaVsCentralPct": 36.71
+      },
+      {
+        "label": "eCPM interstitiel 5$ (vs 9$ central)",
+        "netRevenuePerMau": 0.1196,
+        "deltaVsCentralPct": -15.24
+      },
+      {
+        "label": "eCPM interstitiel 13$ (vs 9$ central)",
+        "netRevenuePerMau": 0.1627,
+        "deltaVsCentralPct": 15.31
+      },
+      {
+        "label": "Opt-in rewarded 25% (vs 45% central)",
+        "netRevenuePerMau": 0.109,
+        "deltaVsCentralPct": -22.75
+      },
+      {
+        "label": "Opt-in rewarded 65% (vs 45% central)",
+        "netRevenuePerMau": 0.1733,
+        "deltaVsCentralPct": 22.82
+      },
+      {
+        "label": "Conversion Premium 0.4%/mois (vs 1.2% central)",
+        "netRevenuePerMau": 0.1276,
+        "deltaVsCentralPct": -9.57
+      },
+      {
+        "label": "Conversion Premium 2.5%/mois (vs 1.2% central)",
+        "netRevenuePerMau": 0.1631,
+        "deltaVsCentralPct": 15.59
+      },
+      {
+        "label": "Session 2.5min (vs 3.5min central)",
+        "netRevenuePerMau": 0.1066,
+        "deltaVsCentralPct": -24.45
+      },
+      {
+        "label": "Session 5.0min (vs 3.5min central)",
+        "netRevenuePerMau": 0.1929,
+        "deltaVsCentralPct": 36.71
+      },
+      {
+        "label": "Opt-in rewarded 0% (aucune dépendance à la pub volontaire)",
+        "netRevenuePerMau": 0.0689,
+        "deltaVsCentralPct": -51.17
+      }
+    ],
+    "populationSensitivity": [
+      {
+        "label": "Population 100% 'Expert' (quasi jamais de vie perdue)",
+        "lifeLostRate": 0.002,
+        "rewardedRevenuePerMonth": 38.8
+      },
+      {
+        "label": "Population 100% 'Débutant' (le profil le plus faible mesuré)",
+        "lifeLostRate": 0.879,
+        "rewardedRevenuePerMonth": 17052.96
+      }
+    ]
+  },
+  "paybackMonthsAt1000MAU": {
+    "pessimiste": 1.19,
+    "central": 0.18,
+    "optimiste": 0.04
+  },
+  "zeroRewardedOptIn": {
+    "netRevenueAt1000MAU": 68.86
+  },
+  "criteria": {
+    "stable": "Trois sources indépendantes (interstitiel, rewarded, Premium) contribuent au revenu ; la sensibilité montre qu'aucun levier commercial isolé ne fait varier le résultat de plus de ~50% dans un sens ou l'autre, et le scénario 0% rewarded (ci-dessous) montre que le modèle ne DÉPEND d'aucune des trois sources prise isolément.",
+    "rentable": "Revenu net par MAU/mois positif dans les 3 scénarios à 100k MAU (pessimiste 0.021$, central 0.1411$, optimiste 0.6471$) ; seuil de rentabilité des 25$ de frais fixes atteint en moins de 2 mois dès 1000 MAU, tous scénarios confondus.",
+    "durable": "Seul coût variable identifié : bande passante d'hébergement statique, résolu à coût nul à toutes les échelles (Cloudflare Pages, voir rapport économique V4, non modifié par V5/V6). Le revenu net par MAU/mois reste rigoureusement constant de 10 à 1 000 000 MAU (aucun coût ne croît avec l'usage).",
+    "rewardedIndependence": "Scénario 0% opt-in rewarded (demandé explicitement par le cahier des charges V6) : revenu net toujours positif à 1000 MAU (68.86$/mois, interstitiel + Premium seuls) -- le modèle ne dépend donc jamais de la continuation publicitaire pour rester viable.",
+    "mesurable": "Inconnues explicites à mesurer après lancement : mélange réel de population de joueurs (hypothèse 5%/15%/30%/35%/15% Expert/Bon/Moyen/Faible/Débutant non mesurée), rétention réelle (DAU/MAU), taux d'acceptation réel du rewarded 'continuer', eCPM réel post-intégration AdMob, conversion Premium réelle, nombre réel de tentatives par niveau (le modèle utilise une moyenne théorique dérivée de la simulation, jamais une donnée de jeu réel)."
+  }
+}
